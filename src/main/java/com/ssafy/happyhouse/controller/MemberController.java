@@ -48,7 +48,7 @@ public class MemberController {
 		}else if(passwordEncoder.matches(memberDto.getUserPwd(), dto.getUserPwd())) { // 로그인 성공
 			dto.setUserPwd("");
 			session.setAttribute("userinfo", dto);
-			System.out.println(dto.toString());
+			System.out.println(session.getAttribute("userinfo"));
 		}else { // 
 			msg = "비밀번호가 일치하지 않습니다.";
 		}
@@ -74,45 +74,41 @@ public class MemberController {
 	}
 
 	// 회원가입
-	@PostMapping("/")
+	@PostMapping
 	private ResponseEntity<String> registerMember(@RequestBody MemberDto memberDto) {
 		memberDto.setUserPwd(passwordEncoder.encode(memberDto.getUserPwd()));
 		memberService.registerMember(memberDto);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
-	// 회원 정보 조회 => 로그인 시 세션에 담아놨기 때문에 그냥 페이지 이동만
-//	@GetMapping()
-//	private String memberInfo() {
-//		return "userInfo";
-//	}
-//
+	// 회원 정보 조회 => 로그인 시 세션에 담아놨기 때문에 세션값 주기
+	@GetMapping
+	private ResponseEntity<MemberDto> memberInfo(HttpSession session) {
+		System.out.println(session.getAttribute("userinfo"));
+		return new ResponseEntity<MemberDto>((MemberDto)session.getAttribute("userinfo"),HttpStatus.OK);
+	}
+	
 //	// 회원 정보 수정
 //	@PostMapping("/modify")
 //	private String memberModify(MemberDto memberDto, HttpSession session) {
 //		memberService.modifyMember(memberDto);
 //		return "userInfo";
 //	}
-//
-//	// 회원가입 폼으로 이동
-//	@GetMapping("/registerForm")
-//	private String registerForm() {
-//		return "register";
-//	}
-//
-//
-//	// 회원 탈퇴
-//	@DeleteMapping
-//	private String memberDelete(HttpSession session) {
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//		if (memberDto != null) {
-//			memberService.deleteMember(memberDto.getUserId());
-//			session.invalidate();
-//		}
-//
-//		return "redirect:/";
-//	}
-//	
+	
+	// 회원 탈퇴
+	@DeleteMapping
+	private ResponseEntity<String> memberDelete(HttpSession session) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+		if (memberDto != null) {
+			memberService.deleteMember(memberDto.getUserId());
+			session.invalidate();
+			return new ResponseEntity<String>(HttpStatus.OK);
+		}else {
+			System.out.println(memberDto);
+			return new ResponseEntity<String>("로그인 해주세요.", HttpStatus.NO_CONTENT);
+		}
+	}
+
 	@GetMapping("/{pageNo}/{key}/{word}")
 	@ResponseBody
 	private ResponseEntity<Map<String,Object>> searchAll(@PathVariable("pageNo") int pageNo, @PathVariable("key") String key, @PathVariable("word") String word){
@@ -125,7 +121,7 @@ public class MemberController {
 		map.put("bean", bean);
 		
 		List<MemberDto> users = memberService.searchAll(bean);
-		map.put("users", users);
+		map.put("", users);
 		
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}

@@ -63,6 +63,7 @@ export default {
             if (data == 'success') {
               // this.$router.push('/');
               this.msg = data;
+              this.$store.dispatch('getUser');
             } else {
               this.msg = data;
             }
