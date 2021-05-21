@@ -3,7 +3,6 @@ package com.ssafy.happyhouse.model.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.happyhouse.model.dao.MemberDao;
@@ -17,10 +16,6 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDao dao;
 	
-	// 비밀번호 암호화를 위한 객체
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
 	@Override
 	public void registerMember(MemberDto memberDto) {
 		memberDto.setAddress(memberDto.getAddress().trim());
@@ -62,20 +57,5 @@ public class MemberServiceImpl implements MemberService {
 		bean.setPageLink(util.getPageBar());
 		System.out.println(bean.getPageLink());
 		return dao.searchAll(bean);
-	}
-
-	@Override
-	public String login(MemberDto memberDto) {
-		MemberDto dto = dao.getMember(memberDto.getUserId());
-		// 아이디 없음
-		if(dto == null) {
-			return "등록된 아이디가 없습니다.";
-		}
-		
-		if(passwordEncoder.matches(memberDto.getUserPwd(), dto.getUserPwd())) {
-			return "success";
-		}
-		
-		return "비밀번호가 일치하지 않습니다.";
 	}
 }

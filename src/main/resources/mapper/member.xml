@@ -6,7 +6,7 @@
 
 	<!-- 아이디로 회원 조회 -->
 	<select id="getMember" parameterType="string" resultType="memberDto">
-		select username, userid, email, userpwd, address
+		select *
 		from ssafy_member
 		where userid = #{userId}
 	</select>

@@ -11,7 +11,7 @@ public interface MemberService {
 	void registerMember(MemberDto memberDto);
 	
 //	로그인
-	String login(MemberDto memberDto);
+//	String login(MemberDto memberDto);
 	
 //	회원정보 수정을 위한 회원의 모든 정보 얻기
 	MemberDto getMember(String userId);

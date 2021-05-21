@@ -37,13 +37,12 @@ export default {
   data() {
     return { userId: '', userPwd: '', msg: '' };
   },
-
   methods: {
     login() {
       let err = true;
 
       if (this.userId == '') {
-        this.msg = '아이디를을 입력해 주세요';
+        this.msg = '아이디를 입력해 주세요';
         err = false;
         this.$refs.userId.focus();
       }
@@ -62,7 +61,8 @@ export default {
           .then(({ data }) => {
             console.log(data);
             if (data == 'success') {
-              this.$router.push('/');
+              // this.$router.push('/');
+              this.msg = data;
             } else {
               this.msg = data;
             }
