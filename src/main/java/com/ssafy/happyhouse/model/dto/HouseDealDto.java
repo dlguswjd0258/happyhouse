@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.model.dto;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import lombok.Getter;
