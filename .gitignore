@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### vue build ###
-src/main/resource/static/
+src/main/resources/static/
