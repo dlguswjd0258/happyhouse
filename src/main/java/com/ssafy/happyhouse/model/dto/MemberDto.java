@@ -62,14 +62,19 @@ public class MemberDto {
 	}
 
 	public void addPrefer(String dong) {
-		if(prefer==null) {
+		if (prefer == null) {
 			prefer = new LinkedList<>();
 		}
 		this.prefer.add(dong);
 	}
-	
+
 	public List getPrefer() {
 		return prefer;
 	}
 
+	@Override
+	public String toString() {
+		return "MemberDto [userId=" + userId + ", userName=" + userName + ", userPwd=" + userPwd + ", email=" + email
+				+ ", address=" + address + ", joindate=" + joindate + ", prefer=" + prefer + "]";
+	}
 }
