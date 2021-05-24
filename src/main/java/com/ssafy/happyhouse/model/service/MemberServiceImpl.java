@@ -54,8 +54,6 @@ public class MemberServiceImpl implements MemberService {
 	public List<MemberDto> searchAll(PageBean bean) {
 		int total = dao.totalCount(bean);
 		PageUtility util = new PageUtility(bean.getInterval(), total, bean.getPageNo(), "images/");
-		bean.setPageLink(util.getPageBar());
-		System.out.println(bean.getPageLink());
 		return dao.searchAll(bean);
 	}
 }

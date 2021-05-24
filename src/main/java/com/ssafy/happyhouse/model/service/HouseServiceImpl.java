@@ -29,14 +29,18 @@ public class HouseServiceImpl implements HouseService {
 	public List<HouseDealDto> searchAll(PageBean bean) {
 
 		int total = dao.totalCount(bean);
-		PageUtility util = new PageUtility(bean.getInterval(), total, bean.getPageNo(), "images/");
-		bean.setPageLink(util.getPageBar());
-		System.out.println(bean.getDong()+"k"+bean.getWord()+"k");
+		System.out.println(bean.getStartNo()+"k"+bean.getDong()+"k"+bean.getWord()+"k");
 		for(HouseDealDto h : dao.searchDeal(bean)) {
 			System.out.println(h);
 		}
 		return dao.searchDeal(bean);
 
+	}
+	
+	@Override
+	@Transactional
+	public int getTotal(PageBean bean) {
+		return dao.totalCount(bean);
 	}
 
 	@Override

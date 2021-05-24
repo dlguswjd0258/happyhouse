@@ -27,23 +27,38 @@ public class HouseDealController {
 	HouseService houseService;
 
 	@ApiOperation(value ="전체 정보 받아오기")
-	@GetMapping("House")
-	private ResponseEntity<List<HouseDealDto>> getList() {
+	@GetMapping("/{pageNo}/{dong}/{word}")
+	private ResponseEntity<List<HouseDealDto>> getList(@PathVariable("pageNo") int pageNo,@PathVariable("dong") String dong,
+			@PathVariable("word") String word) {
 		PageBean bean = new PageBean();
+		bean.setPageNo(pageNo);
+		bean.setDong(dong);
+		bean.setWord(word);
 		return new ResponseEntity<List<HouseDealDto>>(houseService.searchAll(bean), HttpStatus.OK);
 	}
+	
+	@GetMapping("/total/{pageNo}/{dong}/{word}")
+	private ResponseEntity<Integer> getTotal(@PathVariable("pageNo") int pageNo,@PathVariable("dong") String dong,
+			@PathVariable("word") String word) {
+		PageBean bean = new PageBean();
+		bean.setStartNo(pageNo);
+		bean.setDong(dong);
+		bean.setWord(word);
+		System.out.println(pageNo);
+		return new ResponseEntity<Integer>(houseService.getTotal(bean), HttpStatus.OK);
+	}
 
-	@GetMapping("House/{dealno}")
+	@GetMapping("/{dealno}")
 	private ResponseEntity<HouseDealDto> getDeal(@PathVariable("dealno") int dealno) {
 		return new ResponseEntity<HouseDealDto>(houseService.getHouseDeal(dealno), HttpStatus.OK);
 	}
 
-	@GetMapping("House/GuSearch/{city}")
+	@GetMapping("/GuSearch/{city}")
 	private ResponseEntity<List<BaseAddress>> getGu(@PathVariable("city") String city) {
 		return new ResponseEntity<List<BaseAddress>>(houseService.searchGu(city), HttpStatus.OK);
 	}
 
-	@GetMapping("House/DongSearch/{gu}")
+	@GetMapping("/DongSearch/{gu}")
 	private ResponseEntity<List<BaseAddress>> getDong(@PathVariable("gu") String gu) {
 		return new ResponseEntity<List<BaseAddress>>(houseService.searchDong(gu), HttpStatus.OK);
 	}

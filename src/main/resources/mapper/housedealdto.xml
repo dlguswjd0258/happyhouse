@@ -16,19 +16,19 @@
 		resultType="HouseDealDto">
 		select * from housedeal
 		<where>
-			<if test="dong!='' and dong!=null">
+			<if test="dong!='' and dong!='null'">
 				<choose>
-					<when test="word!=null and word!=''">
+					<when test="word!='null' and word!=''">
 						AptName like concat('%',#{word},'%')
 						and dong = #{dong}
 					</when>
-					<when test="word==null or word==''">
+					<when test="word=='null' or word==''">
 						dong = #{dong}
 					</when>
 				</choose>
 			</if>
-			<if test="dong=='' or dong==null">
-				<if test="word!=null and word!=''">
+			<if test="dong=='' or dong=='null'">
+				<if test="word!='null' and word!=''">
 					AptName like concat('%',#{word},'%')
 				</if>
 			</if>
@@ -41,19 +41,19 @@
 		resultType="int">
 		select count(*) from housedeal
 		<where>
-			<if test="dong!=''">
+			<if test="dong!='' and dong!='null'">
 				<choose>
-					<when test="word!=null and word!=''">
+					<when test="word!='null' and word!=''">
 						AptName like concat('%',#{word},'%')
 						and dong = #{dong}
 					</when>
-					<when test="word==null or word==''">
+					<when test="word=='null' or word==''">
 						dong = #{dong}
 					</when>
 				</choose>
 			</if>
-			<if test="dong==''">
-				<if test="word!=null and word!=''">
+			<if test="dong=='' or dong=='null'">
+				<if test="word!='null' and word!=''">
 					AptName like concat('%',#{word},'%')
 				</if>
 			</if>
