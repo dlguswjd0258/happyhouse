@@ -2,7 +2,7 @@ package com.ssafy.happyhouse.model.dto;
 
 import java.util.Date;
 
-public class NotationDto {
+public class NoticeDto {
 	private int no;
 	private String title;
 	private String content;

@@ -6,33 +6,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssafy.happyhouse.model.dao.NotationDao;
-import com.ssafy.happyhouse.model.dto.NotationDto;
+import com.ssafy.happyhouse.model.dao.NoticeDao;
+import com.ssafy.happyhouse.model.dto.NoticeDto;
 
 @Service
-public class NotationServiceImpl implements NotationService {
+public class NoticeServiceImpl implements NoticeService {
 	
 	@Autowired
-	private NotationDao notationDao;
+	private NoticeDao notationDao;
 
 	@Override
-	public List<NotationDto> selectBoard() {
+	public List<NoticeDto> selectBoard() {
 		return notationDao.selectBoard();
 	}
 
 	@Override
-	public NotationDto selectBoardByNo(int no) {
+	public NoticeDto selectBoardByNo(int no) {
 		return notationDao.selectBoardByNo(no);
 	}
 
 	@Override
-	public boolean insertBoard(NotationDto qna) {
+	public boolean insertBoard(NoticeDto qna) {
 		return notationDao.insertBoard(qna) == 1;
 	}
 
 	@Override
 	@Transactional
-	public boolean updateBoard(NotationDto qna) {
+	public boolean updateBoard(NoticeDto qna) {
 		return notationDao.updateBoard(qna) == 1;
 	}
 
