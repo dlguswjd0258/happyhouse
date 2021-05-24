@@ -66,6 +66,7 @@
 		from baseaddress
 		where
 		city=#{city}
+		order by gugun
 	</select>
 
 	<select id="searchDong" parameterType="string"
@@ -73,6 +74,7 @@
 		select dong
 		from baseaddress
 		where dongcode=#{gu}
+		order by dong
 	</select>
 
 </mapper>
