@@ -9,7 +9,6 @@
           </div>
 
           <div class="modal-body">
-            <slot name="body">
               <p>이미지</p>
               <b-table-simple small>
 						<colgroup>
@@ -39,18 +38,14 @@
 							</b-tr>
 						</b-tbody>
 					</b-table-simple>
-            </slot>
           </div>
 
           <div class="modal-footer">
-            <slot name="footer">
-              <button class="modal-default-button">
-                찜하기
-              </button>
-              <button class="modal-default-button" @click="$emit('close')">
+              <b-button variant="secondary" v-if="user&&wish==false" @click="addWish">찜하기</b-button>
+              <b-button variant="danger" v-if="user&&wish==true" @click="deleteWish">찜취소</b-button>
+              <b-button variant="dark" @click="$emit('close')">
                 닫기
-              </button>
-            </slot>
+              </b-button>
           </div>
         </div>
       </div>
@@ -59,21 +54,57 @@
 </template>
 
 <script>
+import axios from 'axios';
 import {bus} from '@/dealbus'
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
     return {
 		deal:{},
+    wish:false,
 		};
 	},
   created() {
     bus.$on('showDeal',this.getDeal);
-  },
+    },
   methods: {
     getDeal(deal){
       this.deal=deal;
-    }
+      axios
+		  .get(`http://localhost:8090/house/wish/${this.user.userId}/${this.deal.no}`)
+		  .then(({data})=>{
+			  if(data!=0){
+          this.wish=true;
+        }
+		  })
+		  .catch(()=>{
+			  alert("찜 조회 중 오류 발생!")
+		  })
+    },
+    addWish(){
+      axios
+		  .post(`http://localhost:8090/house/wish/${this.user.userId}/${this.deal.no}`)
+		  .then(()=>{
+        this.wish=true;
+		  })
+		  .catch(()=>{
+			  alert("찜 등록 중 오류 발생!")
+		  })
+    },
+    deleteWish(){
+      axios
+		  .delete(`http://localhost:8090/house/wish/${this.user.userId}/${this.deal.no}`)
+		  .then(()=>{
+        this.wish=false;
+		  })
+		  .catch(()=>{
+			  alert("찜 삭제 중 오류 발생!")
+		  })
+    },
+  },
+  computed: {
+    ...mapGetters(['user']),
   },
 }
 </script>

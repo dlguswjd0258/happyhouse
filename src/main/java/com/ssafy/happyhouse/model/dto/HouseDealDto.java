@@ -26,4 +26,5 @@ public class HouseDealDto {
 	private String jibun;
 	private String lat;
 	private String lng;
+	private boolean wish;
 }

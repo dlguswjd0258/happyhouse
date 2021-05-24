@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -15,4 +16,7 @@ public interface HouseDealDao {
 	public int totalCount(PageBean bean);
 	public List<BaseAddress> searchGu(String city);
 	public List<BaseAddress> searchDong(String gu);
+	public int getWish(HashMap<String, String> map);
+	public void addWish(HashMap<String, String> map);
+	public void deleteWish(HashMap<String, String> map);
 }

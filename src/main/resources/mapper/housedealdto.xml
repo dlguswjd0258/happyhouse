@@ -76,6 +76,27 @@
 		where dongcode=#{gu}
 		order by dong
 	</select>
+	
+	<select id="getWish" parameterType="HashMap"
+		resultType="int">
+		select EXISTS (
+						select *
+						from wishhouse
+						where no=#{dealno}
+						and userid=#{userId}
+						)
+	</select>
+	
+	<select id="addWish" parameterType="HashMap">
+		insert into wishhouse(no, userid) 
+		values(#{dealno},#{userId})
+	</select>
+	
+	<select id="deleteWish" parameterType="HashMap">
+		delete from wishhouse
+		where userid = #{userId}
+		and no = #{dealno}
+	</select>
 
 </mapper>
 

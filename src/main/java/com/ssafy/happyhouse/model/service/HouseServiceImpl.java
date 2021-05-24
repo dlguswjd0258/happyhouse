@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ public class HouseServiceImpl implements HouseService {
 	public int getTotal(PageBean bean) {
 		return dao.totalCount(bean);
 	}
+	
 
 	@Override
 	@Transactional
@@ -53,6 +55,24 @@ public class HouseServiceImpl implements HouseService {
 	@Transactional
 	public List<BaseAddress> searchDong(String gu) {
 		return dao.searchDong(gu);
+	}
+
+	@Override
+	@Transactional
+	public int getWish(HashMap<String, String> map) {
+		return dao.getWish(map);
+	}
+	
+	@Override
+	@Transactional
+	public void addWish(HashMap<String, String> map) {
+		dao.addWish(map);
+	}
+	
+	@Override
+	@Transactional
+	public void deleteWish(HashMap<String, String> map) {
+		dao.deleteWish(map);
 	}
 
 }

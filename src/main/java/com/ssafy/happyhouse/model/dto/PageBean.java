@@ -20,6 +20,9 @@ public class PageBean {
 	/** 현재 페이지 번호 */
 	@Getter @Setter
 	private int pageNo;
+	@Getter @Setter
+	private String user;
+	
 	/** 한 페이지에 보여주 content 개수 */
 	@Getter @Setter
 	private int interval = 10;

@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.ssafy.happyhouse.model.dto.BaseAddress;
@@ -12,4 +13,7 @@ public interface HouseService {
 	public int getTotal(PageBean bean);
 	public List<BaseAddress> searchGu(String city);
 	public List<BaseAddress> searchDong(String gu);
+	public int getWish(HashMap<String, String> map);
+	public void addWish(HashMap<String, String> map);
+	public void deleteWish(HashMap<String, String> map);
 }

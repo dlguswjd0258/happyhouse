@@ -100,6 +100,8 @@
 import axios from 'axios';
 import Modal from '@/components/house/DealModal'
 import {bus} from '@/dealbus'
+import { mapGetters } from 'vuex';
+
 export default {
 	components:{
 		Modal,
@@ -192,6 +194,9 @@ export default {
 		gu: 'searchDong',
 		currentPage: 'searchDeal'
 	},
+	computed: {
+    ...mapGetters(['user']),
+  },
 };
 </script>
 
