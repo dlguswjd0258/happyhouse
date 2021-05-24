@@ -5,17 +5,11 @@ import Login from '@/components/user/login';
 import Register from '@/components/user/register';
 import Userinfo from '@/components/user/userInfo';
 import List from '@/components/house/List';
-import Page from '@/components/house/Pagenation';
 // import Adminuser from '@/components/user/adminuser';
 
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: '/page',
-    name: 'page',
-    component: Page,
-  },
     {
     path: '/',
     name: 'List',
