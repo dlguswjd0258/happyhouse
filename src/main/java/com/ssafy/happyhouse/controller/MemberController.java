@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -87,12 +88,16 @@ public class MemberController {
 		return new ResponseEntity<MemberDto>((MemberDto)session.getAttribute("userinfo"),HttpStatus.OK);
 	}
 	
-//	// 회원 정보 수정
-//	@PostMapping("/modify")
-//	private String memberModify(MemberDto memberDto, HttpSession session) {
-//		memberService.modifyMember(memberDto);
-//		return "userInfo";
-//	}
+	// 회원 정보 수정
+	@PutMapping
+	private ResponseEntity<String> memberModify(@RequestBody MemberDto memberDto) {
+		String pwd = memberDto.getUserPwd().trim();
+		if(pwd != null && !"".equals(pwd)) {
+			memberDto.setUserPwd(passwordEncoder.encode(pwd));
+		}
+		memberService.modifyMember(memberDto);
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
 	
 	// 회원 탈퇴
 	@DeleteMapping

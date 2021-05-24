@@ -19,7 +19,12 @@
 	
 	<!-- 회원 정보 수정 -->
 	<update id="modifyMember" parameterType="memberDto">
-		update ssafy_member set username = #{userName}, userpwd = #{userPwd}, email = #{email}, address = #{address}
+		update ssafy_member set username = #{userName}, email = #{email}, address = #{address} 
+		<where>
+			<if test="userPwd!= null or userPwd!='' ">
+				,userpwd = #{userPwd}
+			</if>
+		</where>
 		where userid=#{userId}
 	</update>
 	
