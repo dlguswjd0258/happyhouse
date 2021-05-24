@@ -19,7 +19,4 @@ public interface NotationDao {
 	public int insertBoard(NotationDto qna);
 	public int updateBoard(NotationDto qna);
 	public int deleteBoard(int no);
-	// 답글
-	public int updateReply(NotationDto qna);
-	public int deleteReply(int no);
 }

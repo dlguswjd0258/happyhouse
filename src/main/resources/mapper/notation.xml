@@ -41,20 +41,5 @@
 		from notation
 		where no = #{no}
 	</delete>
-
-	<!-- 답글 수정 -->
-	<update id="updateReply" parameterType="qnADto">
-		update notation
-		set reply = #{reply}
-		where no = #{no}
-	</update>
-
-	<!-- 답글 삭제 -->
-	<update id="deleteReply" parameterType="int">
-		update notation
-		set reply = null
-		where no = #{no}
-	</update>
-
 </mapper>
 
