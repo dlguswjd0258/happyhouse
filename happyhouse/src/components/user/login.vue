@@ -61,9 +61,9 @@ export default {
           .then(({ data }) => {
             console.log(data);
             if (data == 'success') {
-              // this.$router.push('/');
-              this.msg = data;
+              // this.msg = data;
               this.$store.dispatch('getUser');
+              this.$router.push('/');
             } else {
               this.msg = data;
             }
