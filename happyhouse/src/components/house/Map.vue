@@ -13,17 +13,20 @@ export default {
 		}
 	},
 	created() {
-		bus.$on('showDeals',this.getDeals);
+		bus.$on('showDeals',(payload)=>{
+            this.deals=payload;
+        });
 	},
-	mounted() {
-		
+	watch:{
+		deals:'addScript',
 	},
 	methods : {
 		initMap() {
 			var container = document.getElementById('map');
+			container.innerHTML = '';
 			var options = {
 				center: new kakao.maps.LatLng(37.5642135, 127.0016985),
-				level: 7
+				level: 8
 				};
 			var map = new kakao.maps.Map(container, options);
 			//마커추가하려면 객체를 아래와 같이 하나 만든다.
@@ -39,10 +42,17 @@ export default {
 			// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
 			var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
+			var maxlat=0,maxlng=0;
+			var minlat=300,minlng=300;
 			// 마커 추가 및 mouse over event
 			this.deals.forEach(function(element){
+				if(element.lat>maxlat)maxlat=element.lat;
+				if(element.lat<minlat)minlat=element.lat;
+				if(element.lng>maxlng)maxlng=element.lng;
+				if(element.lng<minlng)minlng=element.lng;
+
 				var marker = new kakao.maps.Marker({
-				position: new kakao.maps.LatLng(element.lat, element.lng),
+					position: new kakao.maps.LatLng(element.lat, element.lng),
 				image: markerImage
 				});
 				marker.setMap(map);
@@ -57,6 +67,9 @@ export default {
 					infowindow.close();
 				});
 			});
+			map.setCenter(new kakao.maps.LatLng(
+											(maxlat*1+minlat*1)/2,
+											(maxlng*1+minlng*1)/2));
 		},
 		addScript() {
 			const script = document.createElement('script');/* global kakao */
@@ -64,16 +77,8 @@ export default {
 			script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f98eb0693d6b9ced430bdc334d33e08e';
 			document.head.appendChild(script);
 		},
-		getDeals(deals){
-			this.deals=deals;
-			window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
-		}
 	}
 }
 </script>
 <style >
-	/* #map {
-		width: 500px;
-		height: 500px;
-	} */
 </style>

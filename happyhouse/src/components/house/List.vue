@@ -83,7 +83,7 @@
 						</b-tfoot>
 					</b-table-simple>
 				</div>
-		<Map></Map>
+				<Map></Map>
 			</div>
 		</div>
 		<Modal @close="closeModal" v-if="showModal">

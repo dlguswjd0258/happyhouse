@@ -41,7 +41,7 @@
           </div>
 
           <div class="modal-footer">
-              <b-button variant="secondary" v-if="user&&wish==false" @click="addWish">찜하기</b-button>
+              <b-button variant="secondary" v-if="user.userId&&wish==false" @click="addWish">찜하기</b-button>
               <b-button variant="danger" v-if="user&&wish==true" @click="deleteWish">찜취소</b-button>
               <b-button variant="dark" @click="$emit('close')">
                 닫기
@@ -66,21 +66,25 @@ export default {
 		};
 	},
   created() {
+    console.log("생성");
     bus.$on('showDeal',this.getDeal);
     },
   methods: {
     getDeal(deal){
       this.deal=deal;
-      axios
-		  .get(`http://localhost:8090/house/wish/${this.user.userId}/${this.deal.no}`)
-		  .then(({data})=>{
-			  if(data!=0){
-          this.wish=true;
-        }
-		  })
-		  .catch(()=>{
-			  alert("찜 조회 중 오류 발생!")
-		  })
+      console.log(this.user.userId);
+      if(this.user){
+        axios
+        .get(`http://localhost:8090/house/wish/${this.user.userId}/${this.deal.no}`)
+        .then(({data})=>{
+          if(data!=0){
+            this.wish=true;
+          }
+        })
+        .catch(()=>{
+          alert("찜 조회 중 오류 발생!")
+        })
+      }
     },
     addWish(){
       axios
