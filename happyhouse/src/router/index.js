@@ -6,17 +6,17 @@ import Register from '@/components/user/register';
 import Userinfo from '@/components/user/userInfo';
 import List from '@/components/house/List';
 import Adminuser from '@/components/user/adminuser';
-// import QnaList from '@/components/qna/List';
-// import QnaCreate from '@/components/qna/List';
-// import QnaDetail from '@/components/qna/List';
-// import QnaUpdate from '@/components/qna/List';
-// import QnaRemove from '@/components/qna/List';
+import Qna from '@/components/qna/Qna';
+import QnaList from '@/components/qna/List';
+import QnaCreate from '@/components/qna/Create';
+import QnaDetail from '@/components/qna/Search';
+import QnaUpdate from '@/components/qna/Update';
+import QnaReply from '@/components/qna/Reply';
 import Notice from '@/components/notice/Notice';
 import NoticeList from '@/components/notice/List';
 import NoticeCreate from '@/components/notice/Create';
 import NoticeDetail from '@/components/notice/Search';
 import NoticeUpdate from '@/components/notice/Update';
-// import NoticeRemove from '@/components/notice/List';
 
 Vue.use(VueRouter);
 
@@ -82,11 +82,37 @@ const routes = [
     ],
   },
 
-  // {
-  //   path: '/qna',
-  //   component: QnaList,
-  //   children: [{}],
-  // },
+  {
+    path: '/qna',
+    component: Qna,
+    children: [
+      {
+        path: '',
+        name: 'qnalist',
+        component: QnaList,
+      },
+      {
+        path: 'create',
+        name: 'qnacreate',
+        component: QnaCreate,
+      },
+      {
+        path: 'detail',
+        name: 'qnadetail',
+        component: QnaDetail,
+      },
+      {
+        path: 'update',
+        name: 'qnaupdate',
+        component: QnaUpdate,
+      },
+      {
+        path: 'reply',
+        name: 'qnareply',
+        component: QnaReply,
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({

@@ -27,6 +27,9 @@ export default new Vuex.Store({
         })
         .catch(() => alert('사용자 정보 저장 중 오류가 발생했습니다.'));
     },
+    resetUser(context) {
+      context.commit('setUser', {});
+    },
   },
   modules: {},
 });
