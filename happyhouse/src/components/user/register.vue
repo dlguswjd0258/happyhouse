@@ -153,7 +153,7 @@ export default {
         this.$refs.userPwd.focus();
       }
 
-      if (err && !this.checkPwd) {
+      if (err && !this.okPwd) {
         msg = '비밀번호를 확인해주세요';
         err = false;
         this.$refs.pwdcheck.focus();
@@ -174,17 +174,6 @@ export default {
             alert('회원가입 성공');
             this.$router.push('/login');
           });
-        // 주소 합치기
-        // var address = $('#address_common').val();
-        // var detail = $('#address_detail').val();
-        // $('#address').val(address + ' ' + detail);
-        // // 이메일과 도메인 합치기
-        // var email = $('#email_id').val();
-        // var domain = $('#emaildomain>option:selected').val();
-        // $('#email').val(email + '@' + domain);
-        // var memberform = $('#memberform');
-        // memberform.attr('action', '${root}/user/register');
-        // memberform.submit();
       }
     },
     checkId() {
