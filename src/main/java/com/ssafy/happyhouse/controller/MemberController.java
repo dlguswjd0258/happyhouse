@@ -92,8 +92,11 @@ public class MemberController {
 	@PutMapping
 	private ResponseEntity<String> memberModify(@RequestBody MemberDto memberDto) {
 		String pwd = memberDto.getUserPwd().trim();
+		System.out.println("pwd: " + pwd);
 		if(pwd != null && !"".equals(pwd)) {
 			memberDto.setUserPwd(passwordEncoder.encode(pwd));
+		}else {
+			memberDto.setUserPwd(null);
 		}
 		memberService.modifyMember(memberDto);
 		return new ResponseEntity<String>(HttpStatus.OK);
@@ -125,7 +128,7 @@ public class MemberController {
 		map.put("bean", bean);
 		
 		List<MemberDto> users = memberService.searchAll(bean);
-		map.put("", users);
+		map.put("users", users);
 		
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}

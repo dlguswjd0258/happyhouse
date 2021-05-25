@@ -52,8 +52,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public List<MemberDto> searchAll(PageBean bean) {
-		int total = dao.totalCount(bean);
-		PageUtility util = new PageUtility(bean.getInterval(), total, bean.getPageNo(), "images/");
+//		int total = dao.totalCount(bean);
+//		PageUtility util = new PageUtility(bean.getInterval(), total, bean.getPageNo(), "images/");
+		bean.setTotal(dao.totalCount(bean));
 		return dao.searchAll(bean);
 	}
 }

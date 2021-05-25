@@ -20,11 +20,9 @@
 	<!-- 회원 정보 수정 -->
 	<update id="modifyMember" parameterType="memberDto">
 		update ssafy_member set username = #{userName}, email = #{email}, address = #{address} 
-		<where>
-			<if test="userPwd!= null or userPwd!='' ">
-				,userpwd = #{userPwd}
-			</if>
-		</where>
+		<if test="userPwd != null">
+			,userpwd = #{userPwd}
+		</if>
 		where userid=#{userId}
 	</update>
 	
@@ -36,7 +34,7 @@
 	<!-- 회원 전체 조회 -->
 	<select id="searchAll" parameterType="pageBean"	resultType="memberDto">
 		select * from ssafy_member
-		<!-- <where>
+		<where>
 			<if test="key!='all' and word!=null and word!=''">
 				<choose>
 					<when test="key!='all'">
@@ -44,7 +42,7 @@
 					</when>
 				</choose>
 			</if>
-		</where> --> 
+		</where>
 		order by userid desc
 		limit #{startNo},#{interval}
 	</select>
@@ -58,7 +56,7 @@
 					</when>
 				</choose>
 			</if>
-		</where> 
+		</where>
 	</select>
 	
 </mapper>
