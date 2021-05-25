@@ -23,21 +23,33 @@
       </tr>
     </b-table-simple>
     <div class="text-right">
-      <router-link class="btn btn-primary" to="/qna/moveqna/">목록</router-link>
-      <button v-if="!board.reply" class="btn btn-primary" @click="replyBoard()">답변</button>
+      <router-link class="btn btn-primary" to="/qna">목록</router-link>
+      <!-- <button v-if="!board.reply" class="btn btn-primary" @click="replyBoard()">답변</button> -->
       <button class="btn btn-warning" @click="updateBoard()">수정</button>
       <button class="btn btn-danger" @click="removeBoard()">삭제</button>
     </div>
-    <b-table-simple v-if="board.reply">
+    <div>
+      <router-view :board="this.board" />
+    </div>
+    <!-- <b-table-simple class="mt-3">
       <b-tr>
         <b-th>답변:</b-th>
-        <b-td>{{ board.reply }}</b-td>
+        <b-td v-if="board.reply">{{ board.reply }}</b-td>
+        <b-td v-else>
+          <textarea id="reply" ref="reply" cols="120" rows="2" v-model="reply"></textarea>
+        </b-td>
+        <b-td>
+          <div v-if="!board.reply">
+            <button class="btn btn-primary" @click="replyHandler()">등록</button>
+          </div>
+          <div v-if="board.reply">
+            <button class="btn btn-primary" @click="replyHandler()">수정</button>
+            <button class="btn btn-danger" @click="removeReply()">삭제</button>
+          </div>
+        </b-td>
       </b-tr>
-    </b-table-simple>
-    <div class="text-right">
-      <button v-if="board.reply" class="btn btn-primary" @click="replyBoard()">답변수정</button>
-      <button v-if="board.reply" class="btn btn-danger" @click="removeReply()">답변삭제</button>
-    </div>
+    </b-table-simple> -->
+    <div class="text-right"></div>
   </div>
 </template>
 <script>
@@ -56,14 +68,9 @@ export default {
   },
   created() {
     bus.$on('searchBoard', this.searchBoard);
+    this.$router.push('/qna/detail/reply');
   },
   methods: {
-    replyBoard() {
-      this.$router.push('/qna/reply');
-      setTimeout(() => {
-        bus.$emit('replyBoard', this.board);
-      }, 100);
-    },
     updateBoard() {
       this.$router.push('/qna/update');
       setTimeout(() => {
@@ -91,26 +98,6 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-        });
-    },
-    removeReply() {
-      axios
-        .delete(`http://localhost:8090/qna/reply/${this.board.no}`)
-        .then(({ data }) => {
-          console.log(data);
-          if (data == 'success') {
-            alert('삭제 완료!');
-            this.$router.push('/qna/search');
-            setTimeout(() => {
-              bus.$emit('searchBoard', this.board.no);
-            }, 100);
-          } else {
-            alert('삭제중 오류 발생!');
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          alert('답변 삭제중 오류 발생!');
         });
     },
   },

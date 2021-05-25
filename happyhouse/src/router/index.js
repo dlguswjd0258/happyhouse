@@ -100,16 +100,18 @@ const routes = [
         path: 'detail',
         name: 'qnadetail',
         component: QnaDetail,
+        children: [
+          {
+            path: 'reply',
+            name: 'qnareply',
+            component: QnaReply,
+          },
+        ],
       },
       {
         path: 'update',
         name: 'qnaupdate',
         component: QnaUpdate,
-      },
-      {
-        path: 'reply',
-        name: 'qnareply',
-        component: QnaReply,
       },
     ],
   },
