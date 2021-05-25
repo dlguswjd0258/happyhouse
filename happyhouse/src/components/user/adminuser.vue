@@ -55,8 +55,8 @@
         <div class="overflow-auto">
           <b-pagination
             v-model="bean.pageNo"
-            :total-rows="bean.interval"
-            :per-page="perPage"
+            :total-rows="bean.total"
+            :per-page="bean.interval"
             aria-controls="my-table"
           ></b-pagination>
         </div>
