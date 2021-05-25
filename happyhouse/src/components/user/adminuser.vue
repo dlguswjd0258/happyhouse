@@ -80,7 +80,14 @@ export default {
   methods: {
     search() {
       if (!this.bean.word) {
-        alert('검색할 내용을 입력하세요.');
+        axios
+          .get(`http://localhost:8090/user/1/all/${null}`)
+          .then(({ data }) => {
+            this.users = data.users;
+            this.bean = data.bean;
+            this.bean.word = '';
+          })
+          .catch(() => alert('회원 조회 중 오류가 발생했습니다.'));
       } else {
         axios
           .get(`http://localhost:8090/user/1/${this.bean.key}/${this.bean.word}`)
@@ -89,9 +96,7 @@ export default {
             this.bean = data.bean;
             this.bean.word = '';
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch(() => alert('회원 조회 중 오류가 발생했습니다.'));
       }
     },
   },
