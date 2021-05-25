@@ -11,11 +11,12 @@ import Adminuser from '@/components/user/adminuser';
 // import QnaDetail from '@/components/qna/List';
 // import QnaUpdate from '@/components/qna/List';
 // import QnaRemove from '@/components/qna/List';
-// import NotationList from '@/components/notation/List';
-// import NotationCreate from '@/components/qna/List';
-// import NotationDetail from '@/components/qna/List';
-// import NotationUpdate from '@/components/qna/List';
-// import NotationRemove from '@/components/qna/List';
+import Notice from '@/components/notice/Notice';
+import NoticeList from '@/components/notice/List';
+import NoticeCreate from '@/components/notice/Create';
+import NoticeDetail from '@/components/notice/Search';
+import NoticeUpdate from '@/components/notice/Update';
+// import NoticeRemove from '@/components/notice/List';
 
 Vue.use(VueRouter);
 
@@ -53,6 +54,32 @@ const routes = [
     path: '/adminuser',
     name: 'adminuser',
     component: Adminuser,
+  },
+  {
+    path: '/notice',
+    component: Notice,
+    children: [
+      {
+        path: '',
+        name: 'noticelist',
+        component: NoticeList,
+      },
+      {
+        path: 'create',
+        name: 'noticecreate',
+        component: NoticeCreate,
+      },
+      {
+        path: 'detail',
+        name: 'noticedetail',
+        component: NoticeDetail,
+      },
+      {
+        path: 'update',
+        name: 'noticeupdate',
+        component: NoticeUpdate,
+      },
+    ],
   },
 
   // {
