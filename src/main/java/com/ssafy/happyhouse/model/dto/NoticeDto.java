@@ -51,7 +51,7 @@ public class NoticeDto {
 
 	@Override
 	public String toString() {
-		return "QnADto [no=" + no + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regtime=" + regtime + "]";
+		return "NoticeDto [no=" + no + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regtime=" + regtime + "]";
 	}
 
 }
