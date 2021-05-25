@@ -58,6 +58,14 @@ public class HouseDealController {
 		map.put("dealno", no);
 		return new ResponseEntity<Integer>(houseService.getWish(map), HttpStatus.OK);
 	}
+	
+//	@GetMapping("/wish/{user}")
+//	private ResponseEntity<Integer> getAllwish(@PathVariable("user") String user) {
+//		HashMap<String, String> map = new HashMap<String, String>();
+//		map.put("userId", user);
+//		return new ResponseEntity<Integer>(houseService.getAllWish(map), HttpStatus.OK);
+//	}
+	
 	@DeleteMapping("/wish/{user}/{dealno}")
 	private ResponseEntity<String> deletewish(@PathVariable("user") String user,@PathVariable("dealno") String no) {
 		HashMap<String, String> map = new HashMap<String, String>();
