@@ -14,12 +14,17 @@
 
 	<select id="searchDeal" parameterType="pagebean"
 		resultType="HouseDealDto">
-		select * from housedeal
+		select * from housedeal as a
+		left join (
+					select AptName, lat, lng, code as Ccode from houseinfo
+				  ) as b
+		on a.AptName = b.AptName
+		and a.code = b.Ccode
 		<where>
 			<if test="dong!='' and dong!='null'">
 				<choose>
 					<when test="word!='null' and word!=''">
-						AptName like concat('%',#{word},'%')
+						a.AptName like concat('%',#{word},'%')
 						and dong = #{dong}
 					</when>
 					<when test="word=='null' or word==''">
@@ -29,7 +34,7 @@
 			</if>
 			<if test="dong=='' or dong=='null'">
 				<if test="word!='null' and word!=''">
-					AptName like concat('%',#{word},'%')
+					a.AptName like concat('%',#{word},'%')
 				</if>
 			</if>
 		</where>

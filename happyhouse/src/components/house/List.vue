@@ -83,12 +83,7 @@
 						</b-tfoot>
 					</b-table-simple>
 				</div>
-				<!-- Tab panes -->
-				<div class="tab-content col-6">
-					<div class="tab-pane container active" id="tab1">
-						<div id="map1" style="width: 100%; height: 100vh;"></div>
-					</div>
-				</div>
+		<Map></Map>
 			</div>
 		</div>
 		<Modal @close="closeModal" v-if="showModal">
@@ -99,12 +94,14 @@
 <script>
 import axios from 'axios';
 import Modal from '@/components/house/DealModal'
+import Map from '@/components/house/Map'
 import {bus} from '@/dealbus'
 import { mapGetters } from 'vuex';
 
 export default {
 	components:{
 		Modal,
+		Map
 	},
     data() {
     return {
@@ -136,11 +133,12 @@ export default {
 		.get(`http://localhost:8090/house/${this.currentPage}/${this.dong}/${this.word}`)
 		.then(({data})=>{
 		this.deals = data;
-		this.deals.sort();
+		bus.$emit('showDeals',data);
 		})
 		.catch(()=>{
 		alert("거래 정보 조회 중 오류 발생!")
 		})
+
 	},
 	getTotal(){
 		axios
