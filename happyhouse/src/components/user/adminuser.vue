@@ -2,11 +2,11 @@
   <div class="container" align="center">
     <input type="hidden" name="pageNo" id="pageNo" />
     <div class="mb-3" align="right">
-      <select name="key" id="key" class="col-sd-2">
-        <option value="all">--선택하세요--</option>
-        <option value="userId">아이디</option>
-        <option value="userName">이름</option>
-      </select>
+      <b-form-select v-model="key" class="col-sd-2">
+        <b-form-select-option :value="all">--선택하세요--</b-form-select-option>
+        <b-form-select-option :value="userId">아이디</b-form-select-option>
+        <b-form-select-option :value="userName">이름</b-form-select-option>
+      </b-form-select>
       <input type="text" class="col-sd-2" style="display: none" />
       <input
         type="text"
@@ -14,11 +14,11 @@
         placeholder="Enter search word"
         id="word"
         name="word"
-        value="${bean.word}"
+        v-model="bean.word"
       />
       <a href="#" class="btn btn-primary col-sd-2" id="btn">검색</a>
     </div>
-    <table class="table table-hover">
+    <b-table-simple hover small borderless>
       <colgroup>
         <col width="120" />
         <col width="120" />
@@ -28,33 +28,43 @@
         <col width="120" />
         <col width="130" />
       </colgroup>
-      <thead>
-        <tr>
-          <th class="text-center">아이디</th>
-          <th class="text-center">이름</th>
-          <th class="text-center">이메일</th>
-          <th class="text-center">주소</th>
-          <th class="text-center">가입일</th>
-          <th class="text-center">수정/삭제</th>
-        </tr>
-      </thead>
-      <tbody id="userlist">
-        <tr v-if="!users"></tr>
-        <tr v-for="(user, idex) in users" :key="idex">
-          <td class="text-center" v-text="user.userId"></td>
-          <td class="text-center" v-text="user.userName"></td>
-          <td class="text-center" v-text="user.email"></td>
-          <td class="text-center" v-text="user.address"></td>
-          <td class="text-center" v-text="user.joindate"></td>
-          <td class="text-center"><button type="button" class="btn btn-primary">삭제</button></td>
-        </tr>
-      </tbody>
-      <tfoot id="paging">
-        <tr align="center">
-          <td colspan="7" v-html="bean.pageLink"></td>
-        </tr>
-      </tfoot>
-    </table>
+      <b-thead>
+        <b-tr>
+          <b-th class="text-center">아이디</b-th>
+          <b-th class="text-center">이름</b-th>
+          <b-th class="text-center">이메일</b-th>
+          <b-th class="text-center">주소</b-th>
+          <b-th class="text-center">가입일</b-th>
+          <b-th class="text-center">수정/삭제</b-th>
+        </b-tr>
+      </b-thead>
+      <b-tbody id="userlist">
+        <b-tr v-if="!users">등록된 회원이 없습니다.</b-tr>
+        <b-tr v-for="(user, idex) in users" :key="idex">
+          <b-td class="text-center" v-text="user.userId"></b-td>
+          <b-td class="text-center" v-text="user.userName"></b-td>
+          <b-td class="text-center" v-text="user.email"></b-td>
+          <b-td class="text-center" v-text="user.address"></b-td>
+          <b-td class="text-center" v-text="user.joindate"></b-td>
+          <b-td class="text-center"
+            ><button type="button" class="btn btn-primary">삭제</button></b-td
+          >
+        </b-tr>
+      </b-tbody>
+      <b-tfoot id="paging">
+        <div class="overflow-auto">
+          <b-pagination
+            v-model="bean.pageNo"
+            :total-rows="bean.interval"
+            :per-page="perPage"
+            aria-controls="my-table"
+          ></b-pagination>
+        </div>
+        <b-tr align="center">
+          <b-td colspan="7" v-html="bean.pageLink"></b-td>
+        </b-tr>
+      </b-tfoot>
+    </b-table-simple>
   </div>
 </template>
 
@@ -69,53 +79,53 @@ export default {
     };
   },
   methods: {
-    makeList(map) {
-      $('#userlist').empty();
-      $('#paging').empty();
-
-      if (map.users != null) {
-        $(map.users).each(function (index, user) {
-          let str = `
-				<tr id="view_${'${user.userId}'}" class="view" data-id="${'${user.userId}'}">
-					<td>${'${user.userId}'}</td>
-					<td>${'${user.userPwd}'}</td>
-					<td>${'${user.userName}'}</td>
-					<td>${'${user.email}'}</td>
-					<td>${'${user.address}'}</td>
-					<td>${'${user.joindate}'}</td>
-					<td>
-						<button type="button" class="modiBtn btn btn-outline-primary btn-sm">수정</button>
-						<button type="button" class="delBtn btn btn-outline-danger btn-sm">삭제</button>
-					</td>
-				</tr>
-				<tr id="mview_${'${user.userId}'}" data-id="${'${user.userId}'}" style="display: none;">
-					<td>${'${user.userId}'}</td>
-					<td><input type="text" name="userPwd" id="userPwd${'${user.userId}'}" value="${'${user.userPwd}'}"></td>
-					<td>${'${user.userName}'}</td>
-					<td><input type="text" name="email" id="email${'${user.userId}'}" value="${'${user.email}'}"></td>
-					<td><input type="text" name="address" id="address${'${user.userId}'}" value="${'${user.address}'}"></td>
-					<td>${'${user.joindate}'}</td>
-					<td>
-						<button type="button" class="modifyBtn btn btn-primary btn-sm">수정</button>
-						<button type="button" class="cancelBtn btn btn-danger btn-sm">취소</button>
-					</td>
-				</tr>
-				`;
-          $('#userlist').append(str);
-        }); //each
-      } else {
-        let str = `
-			<tr align="center">
-				<td colspan="7">회원 정보가 없습니다.</td>
-			</tr>
-			`;
-        $('#userlist').append(str);
-      }
+    makeList() {
+      // $('#userlist').empty();
+      // $('#paging').empty();
+      // if (map.users != null) {
+      //   $(map.users).each(function (index, user) {
+      //     let str = `
+      // 	<tr id="view_${'${user.userId}'}" class="view" data-id="${'${user.userId}'}">
+      // 		<td>${'${user.userId}'}</td>
+      // 		<td>${'${user.userPwd}'}</td>
+      // 		<td>${'${user.userName}'}</td>
+      // 		<td>${'${user.email}'}</td>
+      // 		<td>${'${user.address}'}</td>
+      // 		<td>${'${user.joindate}'}</td>
+      // 		<td>
+      // 			<button type="button" class="modiBtn btn btn-outline-primary btn-sm">수정</button>
+      // 			<button type="button" class="delBtn btn btn-outline-danger btn-sm">삭제</button>
+      // 		</td>
+      // 	</tr>
+      // 	<tr id="mview_${'${user.userId}'}" data-id="${'${user.userId}'}" style="display: none;">
+      // 		<td>${'${user.userId}'}</td>
+      // 		<td><input type="text" name="userPwd" id="userPwd${'${user.userId}'}" value="${'${user.userPwd}'}"></td>
+      // 		<td>${'${user.userName}'}</td>
+      // 		<td><input type="text" name="email" id="email${'${user.userId}'}" value="${'${user.email}'}"></td>
+      // 		<td><input type="text" name="address" id="address${'${user.userId}'}" value="${'${user.address}'}"></td>
+      // 		<td>${'${user.joindate}'}</td>
+      // 		<td>
+      // 			<button type="button" class="modifyBtn btn btn-primary btn-sm">수정</button>
+      // 			<button type="button" class="cancelBtn btn btn-danger btn-sm">취소</button>
+      // 		</td>
+      // 	</tr>
+      // 	`;
+      //     $('#userlist').append(str);
+      //   }); //each
+      // } else {
+      //   let str = `
+      // <tr align="center">
+      // 	<td colspan="7">회원 정보가 없습니다.</td>
+      // </tr>
+      // `;
+      //   $('#userlist').append(str);
+      // }
     },
   },
   beforeCreate() {},
   created() {
-    axios.get('http://localhost:8090/user').then(({ data }) => {
+    this.bean.word = null;
+    axios.get(`http://localhost:8090/user/1/all/${this.bean.word}`).then(({ data }) => {
       this.users = data.users;
       this.bean = data.bean;
     });
