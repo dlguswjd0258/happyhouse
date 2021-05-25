@@ -23,8 +23,8 @@
     </b-table-simple>
     <div class="text-right">
       <router-link class="btn btn-primary" to="/notice">목록</router-link>
-      <button class="btn btn-warning" @click="updateNotice()">수정</button>
-      <button class="btn btn-danger" @click="removeNotice()">삭제</button>
+      <button v-if="userId == 'admin'" class="btn btn-warning" @click="updateNotice()">수정</button>
+      <button v-if="userId == 'admin'" class="btn btn-danger" @click="removeNotice()">삭제</button>
     </div>
   </div>
 </template>
@@ -37,6 +37,7 @@ export default {
   data() {
     return { notice: {} };
   },
+  props: ['userId'],
   filters: {
     toDate(regtime) {
       return moment(new Date(regtime)).format('YYYY.MM.DD');

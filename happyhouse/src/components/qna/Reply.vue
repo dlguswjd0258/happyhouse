@@ -7,7 +7,7 @@
         <b-td v-else>
           <textarea id="reply" ref="reply" cols="120" rows="2" v-model="board.reply"></textarea>
         </b-td>
-        <b-td>
+        <b-td v-if="userId == 'admin'">
           <div v-if="!modifyFlag">
             <button class="btn btn-primary" @click="changeFlag()">수정</button>
             <button class="btn btn-danger" @click="removeReply()">삭제</button>
@@ -18,7 +18,7 @@
           </div>
         </b-td>
       </b-tr>
-      <b-tr v-else>
+      <b-tr v-else-if="userId == 'admin'">
         <b-td>
           <textarea id="reply" ref="reply" cols="120" rows="2" v-model="reply"></textarea>
         </b-td>
@@ -29,34 +29,19 @@
         </b-td>
       </b-tr>
     </b-table-simple>
-    <!-- <h2 class="text-center">답변 등록</h2>
-    <table class="table table-condensed w-25">
-      <tr>
-        <th>내용</th>
-        <td>
-          <textarea id="reply" ref="reply" cols="30" rows="10" v-model="reply"></textarea>
-        </td>
-      </tr>
-    </table>
-    <div class="text-right">
-      <button class="btn btn-primary" @click="replyHandler">등록</button>
-      <button class="btn btn-primary" @click="moveHandler">목록</button>
-    </div> -->
   </div>
 </template>
 <script>
 import axios from 'axios';
-// import { bus } from '@/eventbus';
 
 export default {
   data() {
     return {
-      // no: '',
       reply: '',
       modifyFlag: false,
     };
   },
-  props: ['board'],
+  props: ['board', 'userId'],
   methods: {
     moveHandler() {
       this.$router.push('/qna');
@@ -120,10 +105,6 @@ export default {
             if (data == 'success') {
               alert('수정 완료!');
               this.changeFlag();
-              // this.$router.push('/qna/search');
-              // setTimeout(() => {
-              //   bus.$emit('searchBoard', this.no);
-              // }, 100);
             } else {
               alert('답변중 오류 발생!');
             }

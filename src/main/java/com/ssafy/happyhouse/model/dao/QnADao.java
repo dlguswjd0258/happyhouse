@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ssafy.happyhouse.model.dto.PageBean;
 import com.ssafy.happyhouse.model.dto.QnADto;
 /*
  전체 리스트
@@ -14,7 +15,8 @@ import com.ssafy.happyhouse.model.dto.QnADto;
 @Mapper
 public interface QnADao {
 	// 게시글
-	public List<QnADto> selectBoard();
+	public List<QnADto> selectBoard(PageBean bean);
+	int totalCount(PageBean bean);
 	public QnADto selectBoardByNo(int no);
 	public int insertBoard(QnADto qna);
 	public int updateBoard(QnADto qna);

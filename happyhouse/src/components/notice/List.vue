@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="text-right">
+    <div class="text-right" v-if="userId == 'admin'">
       <button class="btn btn-primary" @click="movePage">등록</button>
     </div>
     <div v-if="notices.length > 0">
@@ -27,6 +27,15 @@
           </b-tr>
         </b-tbody>
       </b-table-simple>
+      <div class="overflow-auto mt-3">
+        <b-pagination
+          align="center"
+          v-model="bean.pageNo"
+          :total-rows="bean.total"
+          :per-page="bean.interval"
+          aria-controls="my-table"
+        ></b-pagination>
+      </div>
     </div>
     <div v-else>게시글이 없습니다.</div>
   </div>
@@ -38,8 +47,9 @@ import { bus } from '@/eventbus';
 
 export default {
   data() {
-    return { notices: [] };
+    return { notices: [], bean: {} };
   },
+  props: ['userId'],
   filters: {
     toDate(regtime) {
       return moment(new Date(regtime)).format('YYYY.MM.DD');
@@ -58,9 +68,10 @@ export default {
   },
   created() {
     axios
-      .get('http://localhost:8090/notice')
+      .get(`http://localhost:8090/notice/1/all/${null}`)
       .then(({ data }) => {
-        this.notices = data;
+        this.notices = data.notices;
+        this.bean = data.bean;
       })
       .catch((err) => {
         console.log(err);

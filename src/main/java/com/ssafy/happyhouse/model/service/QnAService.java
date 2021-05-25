@@ -2,11 +2,12 @@ package com.ssafy.happyhouse.model.service;
 
 import java.util.List;
 
+import com.ssafy.happyhouse.model.dto.PageBean;
 import com.ssafy.happyhouse.model.dto.QnADto;
 
 public interface QnAService {
 	// QnA 전체 조회
-	public List<QnADto> selectBoard();
+	public List<QnADto> selectBoard(PageBean bean);
 
 	// 번호로 QnA 조회 (상세 조회)
 	public QnADto selectBoardByNo(int no);

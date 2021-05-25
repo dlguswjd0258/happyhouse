@@ -8,38 +8,40 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.happyhouse.model.dao.NoticeDao;
 import com.ssafy.happyhouse.model.dto.NoticeDto;
+import com.ssafy.happyhouse.model.dto.PageBean;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
 	
 	@Autowired
-	private NoticeDao notationDao;
+	private NoticeDao noticeDao;
 
 	@Override
-	public List<NoticeDto> selectBoard() {
-		return notationDao.selectBoard();
+	public List<NoticeDto> selectBoard(PageBean bean) {
+		bean.setTotal(noticeDao.totalCount(bean));
+		return noticeDao.selectBoard(bean);
 	}
 
 	@Override
 	public NoticeDto selectBoardByNo(int no) {
-		return notationDao.selectBoardByNo(no);
+		return noticeDao.selectBoardByNo(no);
 	}
 
 	@Override
 	public boolean insertBoard(NoticeDto qna) {
-		return notationDao.insertBoard(qna) == 1;
+		return noticeDao.insertBoard(qna) == 1;
 	}
 
 	@Override
 	@Transactional
 	public boolean updateBoard(NoticeDto qna) {
-		return notationDao.updateBoard(qna) == 1;
+		return noticeDao.updateBoard(qna) == 1;
 	}
 
 	@Override
 	@Transactional
 	public boolean deleteBoard(int no) {
-		return notationDao.deleteBoard(no) == 1;
+		return noticeDao.deleteBoard(no) == 1;
 	}
 
 }

@@ -29,7 +29,17 @@
             </b-td>
           </b-tr>
         </b-tbody>
+        <b-tfoot id="paging"> </b-tfoot>
       </b-table-simple>
+      <div class="overflow-auto">
+        <b-pagination
+          align="center"
+          v-model="bean.pageNo"
+          :total-rows="bean.total"
+          :per-page="bean.interval"
+          aria-controls="my-table"
+        ></b-pagination>
+      </div>
     </div>
     <div v-else>게시글이 없습니다.</div>
   </div>
@@ -41,7 +51,7 @@ import { bus } from '@/eventbus';
 
 export default {
   data() {
-    return { qnas: [] };
+    return { qnas: [], bean: {} };
   },
   filters: {
     toDate(regtime) {
@@ -61,13 +71,10 @@ export default {
   },
   created() {
     axios
-      .get('http://localhost:8090/qna')
-      // .then(result => {
-      //   console.log(result);
-      //   console.log(result.data);
-      // })
+      .get(`http://localhost:8090/qna/1/all/${null}`)
       .then(({ data }) => {
-        this.qnas = data;
+        this.qnas = data.boards;
+        this.bean = data.bean;
       })
       .catch((err) => {
         console.log(err);

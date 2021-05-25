@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.happyhouse.model.dao.QnADao;
+import com.ssafy.happyhouse.model.dto.PageBean;
 import com.ssafy.happyhouse.model.dto.QnADto;
 
 @Service
@@ -16,8 +17,9 @@ public class QnAServiceImpl implements QnAService {
 	private QnADao qnaDao;
 
 	@Override
-	public List<QnADto> selectBoard() {
-		return qnaDao.selectBoard();
+	public List<QnADto> selectBoard(PageBean bean) {
+		bean.setTotal(qnaDao.totalCount(bean));
+		return qnaDao.selectBoard(bean);
 	}
 
 	@Override

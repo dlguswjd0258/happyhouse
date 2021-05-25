@@ -3,10 +3,11 @@ package com.ssafy.happyhouse.model.service;
 import java.util.List;
 
 import com.ssafy.happyhouse.model.dto.NoticeDto;
+import com.ssafy.happyhouse.model.dto.PageBean;
 
 public interface NoticeService {
 	// QnA 전체 조회
-	public List<NoticeDto> selectBoard();
+	public List<NoticeDto> selectBoard(PageBean bean);
 
 	// 번호로 QnA 조회 (상세 조회)
 	public NoticeDto selectBoardByNo(int no);

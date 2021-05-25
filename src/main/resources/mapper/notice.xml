@@ -5,10 +5,33 @@
 <mapper namespace="com.ssafy.happyhouse.model.dao.NoticeDao">
 
 	<!-- 게시글 전체 조회 -->
-	<select id="selectBoard" resultType="noticeDto">
+	<select id="selectBoard" parameterType="pageBean" resultType="noticeDto">
 		select *
 		from notice
+		<where>
+			<if test="key!='all' and word!=null and word!=''">
+				<choose>
+					<when test="key!='all'">
+						${key} like concat('%',#{word},'%')
+					</when>
+				</choose>
+			</if>
+		</where>
 		order by no desc
+		limit #{startNo},#{interval}
+	</select>
+
+	<select id="totalCount" parameterType="pageBean" resultType="int">
+		select count(*) from notice
+		<where>
+			<if test="key!='all' and word!=null and word!=''">
+				<choose>
+					<when test="key!='all'">
+						${key} like concat('%',#{word},'%')
+					</when>
+				</choose>
+			</if>
+		</where>
 	</select>
 
 	<!-- 게시글 상세 조회 -->

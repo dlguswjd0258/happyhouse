@@ -25,30 +25,16 @@
     <div class="text-right">
       <router-link class="btn btn-primary" to="/qna">목록</router-link>
       <!-- <button v-if="!board.reply" class="btn btn-primary" @click="replyBoard()">답변</button> -->
-      <button class="btn btn-warning" @click="updateBoard()">수정</button>
-      <button class="btn btn-danger" @click="removeBoard()">삭제</button>
+      <button v-if="board.writer == userId" class="btn btn-warning" @click="updateBoard()">
+        수정
+      </button>
+      <button v-if="board.writer == userId" class="btn btn-danger" @click="removeBoard()">
+        삭제
+      </button>
     </div>
     <div>
-      <router-view :board="this.board" />
+      <router-view :board="this.board" :userId="this.userId" />
     </div>
-    <!-- <b-table-simple class="mt-3">
-      <b-tr>
-        <b-th>답변:</b-th>
-        <b-td v-if="board.reply">{{ board.reply }}</b-td>
-        <b-td v-else>
-          <textarea id="reply" ref="reply" cols="120" rows="2" v-model="reply"></textarea>
-        </b-td>
-        <b-td>
-          <div v-if="!board.reply">
-            <button class="btn btn-primary" @click="replyHandler()">등록</button>
-          </div>
-          <div v-if="board.reply">
-            <button class="btn btn-primary" @click="replyHandler()">수정</button>
-            <button class="btn btn-danger" @click="removeReply()">삭제</button>
-          </div>
-        </b-td>
-      </b-tr>
-    </b-table-simple> -->
     <div class="text-right"></div>
   </div>
 </template>
@@ -61,6 +47,7 @@ export default {
   data() {
     return { board: {} };
   },
+  props: ['userId'],
   filters: {
     toDate(regtime) {
       return moment(new Date(regtime)).format('YYYY.MM.DD');

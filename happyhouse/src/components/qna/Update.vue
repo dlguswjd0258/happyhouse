@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     moveHandler() {
-      this.$router.push('/qna/moveqna/');
+      this.$router.push('/qna');
     },
     updateHandler() {
       let err = true;
