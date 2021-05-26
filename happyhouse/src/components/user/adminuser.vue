@@ -54,7 +54,7 @@
       <b-tfoot id="paging">
         <div class="overflow-auto">
           <b-pagination
-            v-model="bean.pageNo"
+            v-model="pageNo"
             :total-rows="bean.total"
             :per-page="bean.interval"
             aria-controls="my-table"
@@ -75,13 +75,25 @@ export default {
     return {
       users: [],
       bean: {},
+      pageNo: 1,
     };
   },
   methods: {
+    getList() {
+      axios
+        .get(`http://localhost:8090/user/${this.pageNo}/all/${null}`)
+        .then(({ data }) => {
+          this.users = data.users;
+          this.bean = data.bean;
+          this.bean.word = '';
+        })
+        .catch(() => alert('회원 조회 중 오류가 발생했습니다.'));
+    },
     search() {
+      this.pageNo = 1;
       if (!this.bean.word) {
         axios
-          .get(`http://localhost:8090/user/1/all/${null}`)
+          .get(`http://localhost:8090/user/${this.pageNo}/all/${null}`)
           .then(({ data }) => {
             this.users = data.users;
             this.bean = data.bean;
@@ -90,7 +102,7 @@ export default {
           .catch(() => alert('회원 조회 중 오류가 발생했습니다.'));
       } else {
         axios
-          .get(`http://localhost:8090/user/1/${this.bean.key}/${this.bean.word}`)
+          .get(`http://localhost:8090/user/${this.pageNo}/${this.bean.key}/${this.bean.word}`)
           .then(({ data }) => {
             this.users = data.users;
             this.bean = data.bean;
@@ -101,14 +113,7 @@ export default {
     },
   },
   created() {
-    axios
-      .get(`http://localhost:8090/user/1/all/${null}`)
-      .then(({ data }) => {
-        this.users = data.users;
-        this.bean = data.bean;
-        this.bean.word = '';
-      })
-      .catch(() => alert('회원 조회 중 오류가 발생했습니다.'));
+    this.getList();
   },
 };
 </script>
