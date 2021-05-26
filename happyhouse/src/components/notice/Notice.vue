@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div>
-      <h3 class="text-center">공지사항</h3>
+    <div class="mb-5">
+      <h1 class="text-center">공지사항</h1>
     </div>
     <router-view :userId="this.user.userId" />
   </div>

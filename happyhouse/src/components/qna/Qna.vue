@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <div>
+  <b-container>
+    <div class="mb-5">
       <h3 class="text-center">Q&A</h3>
     </div>
     <router-view :userId="this.user.userId" />
-  </div>
+  </b-container>
 </template>
 
 <script>
