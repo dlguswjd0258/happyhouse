@@ -30,11 +30,11 @@
                 ></textarea>
               </div>
             </div>
-            <div class="text-right">
-              <button class="btn btn-primary" @click="updateHandler">수정</button>
-              <button class="btn btn-primary" @click="moveHandler">목록</button>
-            </div>
           </form>
+          <div class="text-right">
+            <button class="btn btn-primary" @click="updateHandler">수정</button>
+            <button class="btn btn-primary" @click="moveHandler">목록</button>
+          </div>
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@
       <input type="text" class="form-group col-sd-2m mr-3" style="display: none" />
       <input
         type="text"
-        class="col-sd-2"
+        class="form-control mr-3 col-sd-2"
         placeholder="Enter search word"
         id="word"
         name="word"
