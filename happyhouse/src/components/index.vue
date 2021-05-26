@@ -1,27 +1,45 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="root" value="${pageContext.request.contextPath}" />
-<!DOCTYPE html>
-<html lang="en">
+<template>
+  <div class="wrap">
+    <div class="image">
+      <b-img
+        src="https://images.adsttc.com/media/images/5ecd/d4ac/b357/65c6/7300/009d/slideshow/02C.jpg?1590547607"
+        fluid
+        alt="Responsive image"
+      ></b-img>
+    </div>
+    <div class="text">
+      <p class="text">HappyHouse</p>
+    </div>
+  </div>
+</template>
 
-<head>
-<%@ include file="header.jsp"%>
-</head>
+<script>
+export default {};
+</script>
 
-<body>
-	<!-- Navigation -->
-	<%@ include file="navibar.jsp"%>
-
-	<!-- Page Header -->
-	<%@ include file="pageheader.jsp"%>
-		
-	<!-- Main Content -->
-	<div class="container">
-		<img src="${root}/img/map.png" style="width: 1100px;">
-	</div>
-
-<%@ include file="footer.jsp"%>
-</body>
-
-</html>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Roboto&display=swap');
+.wrap {
+  width: 50%;
+  margin: 10px auto;
+  border: 1px solid #000000;
+  position: relative;
+}
+.wrap img {
+  width: 100%;
+  vertical-align: middle;
+}
+.text {
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 50px;
+  font-family: 'Oswald', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  position: absolute;
+  top: 23%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>
