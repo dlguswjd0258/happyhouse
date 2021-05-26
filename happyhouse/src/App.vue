@@ -1,14 +1,20 @@
 <template>
   <div id="app">
-      <router-link to="/">List</router-link> |
-      <router-link to="/login">login</router-link> |
-    <router-view />
+    <nav-header></nav-header>
+    <router-view id="main" />
+    <main-footer></main-footer>
   </div>
 </template>
 
 <script>
+import NavHeader from '@/components/navibar';
+import MainFooter from '@/components/footer.vue';
 export default {
   name: 'app',
+  components: {
+    NavHeader,
+    MainFooter,
+  },
 };
 </script>
 
@@ -21,7 +27,7 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
+/* #nav {
   padding: 30px;
 }
 
@@ -32,5 +38,9 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+} */
+
+#main {
+  padding-top: 140px;
 }
 </style>
