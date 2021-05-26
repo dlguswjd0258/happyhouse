@@ -28,6 +28,6 @@ export default {
 }
 
 #main {
-  padding-top: 140px;
+  margin-top: 140px;
 }
 </style>

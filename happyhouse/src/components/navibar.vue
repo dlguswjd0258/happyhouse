@@ -21,10 +21,7 @@
                 <router-link to="/notice" class="nav-link">공지사항</router-link>
               </li>
               <li class="nav-item">
-                <router-link to="/" class="nav-link">아파트 검색</router-link>
-              </li>
-              <li class="nav-item">
-                <router-link to="/" class="nav-link">주변 탐방</router-link>
+                <router-link to="/house" class="nav-link">아파트 검색</router-link>
               </li>
               <li class="nav-item">
                 <router-link to="/wish" class="nav-link">관심 지역</router-link>
@@ -40,7 +37,7 @@
                 <router-link to="/userinfo" class="nav-link">마이페이지</router-link>
               </li>
               <li class="nav-item">
-                <a @click="logout()" class="nav-link">LOGOUT</a>
+                <div @click="logout()" class="nav-link">LOGOUT</div>
               </li>
               <li v-if="user.userId == 'admin'" class="nav-item">
                 <router-link to="/adminuser" class="nav-link">회원 관리</router-link>
@@ -71,7 +68,7 @@
                 <router-link to="/notice" class="nav-link">공지사항</router-link>
               </li>
               <li class="nav-item">
-                <router-link to="/" class="nav-link">아파트 검색</router-link>
+                <router-link to="/house" class="nav-link">아파트 검색</router-link>
               </li>
               <li class="nav-item">
                 <router-link to="/qna" class="nav-link">Q&A</router-link>

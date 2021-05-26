@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import Index from '@/components/index';
+import Index from '@/components/indexm';
 import Login from '@/components/user/login';
 import Register from '@/components/user/register';
 import Userinfo from '@/components/user/userInfo';
-import List from '@/components/house/List';
+import HouseList from '@/components/house/List';
 import Wishhouse from '@/components/house/Wishhouse';
 import Adminuser from '@/components/user/adminuser';
 import Qna from '@/components/qna/Qna';
@@ -24,8 +24,13 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'List',
-    component: List,
+    name: 'Index',
+    component: Index,
+  },
+  {
+    path: '/house',
+    name: 'HouseList',
+    component: HouseList,
   },
   {
     path: '/wish',
