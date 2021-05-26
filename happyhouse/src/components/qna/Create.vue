@@ -1,29 +1,42 @@
 <template>
   <div>
-    <h3 class="text-center">게시글 등록</h3>
-    <table class="table table-condensed w-25">
-      <tr>
-        <th>제목</th>
-        <td>
-          <input
-            type="text"
-            id="title"
-            v-model="title"
-            ref="title"
-            placeholder="제목을 입력해주세요"
-          />
-        </td>
-      </tr>
-      <tr>
-        <th>내용</th>
-        <td>
-          <textarea id="content" v-model="content" ref="content" cols="30" rows="10"></textarea>
-        </td>
-      </tr>
-    </table>
-    <div class="text-right">
-      <button class="btn btn-primary" @click="createHandler">등록</button>
-      <button class="btn btn-primary" @click="moveHandler">목록</button>
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <h3 class="text-center">게시글 등록</h3>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane container active pt-5" id="tab1">
+          <form class="form-horizontal" id="memberform" method="post" action="">
+            <div class="form-group" align="left">
+              <label for="title">제목</label>
+              <input
+                type="text"
+                class="form-control mr-3"
+                id="title"
+                v-model="title"
+                ref="title"
+                placeholder="제목을 입력해주세요"
+              />
+            </div>
+            <div class="form-group" align="left">
+              <label for="content">내용</label>
+              <div class="form-inline">
+                <textarea
+                  id="content"
+                  class="form-control mr-3"
+                  v-model="content"
+                  ref="content"
+                  cols="100%"
+                  rows="10"
+                ></textarea>
+              </div>
+            </div>
+            <div class="form-group text-right">
+              <button class="btn btn-primary" @click="createHandler">등록</button>
+              <button class="btn btn-primary" @click="moveHandler">목록</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </template>

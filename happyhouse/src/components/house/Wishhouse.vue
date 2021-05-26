@@ -3,7 +3,7 @@
     <div>
       <h1 class="text-center mb-5">관심 지역</h1>
     </div>
-    <div class="form-inline ml-auto">
+    <div class="form-inline mb-3">
       <div class="form-group md mr-3">
         <b-form-select v-model="city">
           <b-form-select-option value="null">도/광역시</b-form-select-option>
@@ -81,6 +81,7 @@
         </b-pagination>
       </div>
     </div>
+
     <div v-else>관심 목록이 없습니다.</div>
   </b-container>
 </template>
@@ -88,11 +89,35 @@
 <script>
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import { Table, TableColumn } from 'element-ui';
 
 export default {
+  components: {
+    [Table.name]: Table,
+    [TableColumn.name]: TableColumn,
+  },
   data() {
     return {
-      wishes: [],
+      wishes: [
+        {
+          aptName: '경희궁의아침4단지',
+          area: '150.48',
+          buildYear: '2004',
+          code: '11110',
+          dealAmount: '160,000',
+          dealDate: null,
+          dealDay: '25',
+          dealMonth: '1',
+          dealYear: '2019',
+          dong: '내수동',
+          floor: '14',
+          jibun: '73',
+          lat: null,
+          lng: null,
+          no: 5,
+          wish: false,
+        },
+      ],
       city: null,
       gus: [],
       gu: [],
@@ -105,7 +130,7 @@ export default {
     };
   },
   created() {
-    this.searchWish();
+    // this.searchWish();
   },
   methods: {
     searchWish() {
@@ -118,7 +143,7 @@ export default {
         .then(({ data }) => {
           console.log(data.wishes);
           this.wishes = data.wishes;
-          console.log(this.wishes);
+          console.log(this.wishes[0].aptName);
           this.total = data.bean.total;
           this.perPage = data.bean.perPage;
           // bus.$emit('showDeals', data);

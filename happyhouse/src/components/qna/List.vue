@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="text-right">
+    <div class="text-right mb-3">
       <button class="btn btn-primary" @click="movePage">질문 등록</button>
     </div>
     <div v-if="qnas.length > 0">

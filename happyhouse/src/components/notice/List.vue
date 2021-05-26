@@ -4,7 +4,7 @@
       <button class="btn btn-primary" @click="movePage">등록</button>
     </div>
     <div v-if="notices.length > 0">
-      <b-table-simple hover small borderless>
+      <b-table-simple class="table-responsive table">
         <colgroup>
           <col width="5%" />
           <col width="45%" />
@@ -30,9 +30,9 @@
       <div class="overflow-auto mt-3">
         <b-pagination
           align="center"
-          v-model="bean.pageNo"
-          :total-rows="bean.total"
-          :per-page="bean.interval"
+          v-model="pageNo"
+          :total-rows="total"
+          :per-page="interval"
           aria-controls="my-table"
         ></b-pagination>
       </div>
@@ -47,13 +47,21 @@ import { bus } from '@/eventbus';
 
 export default {
   data() {
-    return { notices: [], bean: {} };
+    return {
+      notices: [],
+      pageNo: 1,
+      total: 0,
+      interval: 0,
+    };
   },
   props: ['userId'],
   filters: {
     toDate(regtime) {
       return moment(new Date(regtime)).format('YYYY.MM.DD');
     },
+  },
+  watch: {
+    pageNo: 'getList',
   },
   methods: {
     searchNotice(no) {
@@ -65,17 +73,21 @@ export default {
     movePage() {
       this.$router.push('/notice/create');
     },
+    getList() {
+      axios
+        .get(`http://localhost:8090/notice/${this.pageNo}/all/${null}`)
+        .then(({ data }) => {
+          this.notices = data.notices;
+          this.total = data.bean.total;
+          this.interval = data.bean.interval;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   created() {
-    axios
-      .get(`http://localhost:8090/notice/1/all/${null}`)
-      .then(({ data }) => {
-        this.notices = data.notices;
-        this.bean = data.bean;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.getList();
   },
 };
 </script>

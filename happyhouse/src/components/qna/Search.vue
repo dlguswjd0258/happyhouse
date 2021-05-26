@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <b-container>
     <b-table-simple v-if="board">
       <tr>
         <th>번호</th>
@@ -35,7 +35,7 @@
       <qna-reply :board="this.board" :userId="this.userId" />
     </div>
     <div class="text-right"></div>
-  </div>
+  </b-container>
 </template>
 <script>
 import axios from 'axios';

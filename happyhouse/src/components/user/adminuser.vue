@@ -1,13 +1,13 @@
 <template>
   <div class="container" align="center">
     <input type="hidden" name="pageNo" id="pageNo" />
-    <div class="mb-3" align="right">
-      <b-form-select v-model="bean.key" class="col-sd-2">
+    <div class="form-inline mb-3" align="right">
+      <b-form-select v-model="bean.key" class="form-group col-sd-2 mr-3">
         <b-form-select-option value="all">--선택하세요--</b-form-select-option>
         <b-form-select-option value="userid">아이디</b-form-select-option>
         <b-form-select-option value="username">이름</b-form-select-option>
       </b-form-select>
-      <input type="text" class="col-sd-2" style="display: none" />
+      <input type="text" class="form-group col-sd-2m mr-3" style="display: none" />
       <input
         type="text"
         class="col-sd-2"
@@ -16,7 +16,7 @@
         name="word"
         v-model="bean.word"
       />
-      <button type="button" class="btn btn-primary" @click="search()">검색</button>
+      <button type="button" class="form-group btn btn-primary" @click="search()">검색</button>
     </div>
     <b-table-simple hover small borderless>
       <colgroup>
