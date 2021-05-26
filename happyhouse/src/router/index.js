@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Index from '@/components/indexm';
+import Index from '@/components/index';
 import Login from '@/components/user/login';
 import Register from '@/components/user/register';
 import Userinfo from '@/components/user/userInfo';
