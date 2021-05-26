@@ -20,8 +20,23 @@
               </div>
               <div class="form-group" align="left">
                 <label for="userId">아이디</label>
-                <input type="text" class="form-control" id="userId" ref="userId" v-model="userId" />
-                <input type="button" class="form-control" @click="checkId()" value="중복 확인" />
+                <div class="form-inline">
+                  <input
+                    type="text"
+                    class="form-control mr-3"
+                    id="userId"
+                    ref="userId"
+                    v-model="userId"
+                    style="width: 80%"
+                  />
+                  <input
+                    type="button"
+                    class="form-control"
+                    style="width: 15%"
+                    @click="checkId()"
+                    value="중복 확인"
+                  />
+                </div>
                 <div v-if="msgId" id="waringMsg" class="mt-3" :class="statusIdMsg">
                   {{ msgId }}
                 </div>
@@ -60,9 +75,9 @@
                     id="emailId"
                     ref="emailId"
                     v-model="emailId"
-                    size="25"
+                    size="50"
                   />
-                  @
+                  &nbsp; @ &nbsp;
                   <select class="form-control" id="emailDomain" v-model="emailDomain">
                     <option value="naver.com">naver.com</option>
                     <option value="google.com">google.com</option>
@@ -77,9 +92,10 @@
                 <label for="addressCommon">주소</label><br />
                 <input
                   type="text"
-                  class="form-control"
+                  class="form-control mb-3"
                   id="addressCommon"
                   ref="addressCommon"
+                  placeholder="도로명 주소"
                   v-model="adderssCommon"
                 />
                 <input
@@ -87,6 +103,7 @@
                   class="form-control"
                   id="addressDetail"
                   ref="addressDetail"
+                  placeholder="상세 주소"
                   v-model="addressDetail"
                 />
               </div>
