@@ -2,6 +2,7 @@ package com.ssafy.happyhouse.model.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,6 +74,12 @@ public class HouseServiceImpl implements HouseService {
 	@Transactional
 	public void deleteWish(HashMap<String, String> map) {
 		dao.deleteWish(map);
+	}
+
+	@Override
+	public List<HouseDealDto> getAllWish(Map<String, String> map) {
+		map.put("total", String.valueOf(dao.totalWishCount(map)));
+		return dao.getAllWish(map);
 	}
 
 }

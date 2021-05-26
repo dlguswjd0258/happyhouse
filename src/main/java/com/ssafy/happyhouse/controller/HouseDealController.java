@@ -2,6 +2,7 @@ package com.ssafy.happyhouse.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.happyhouse.model.dto.BaseAddress;
 import com.ssafy.happyhouse.model.dto.HouseDealDto;
+import com.ssafy.happyhouse.model.dto.MemberDto;
 import com.ssafy.happyhouse.model.dto.PageBean;
 import com.ssafy.happyhouse.model.service.HouseService;
 
@@ -59,12 +61,23 @@ public class HouseDealController {
 		return new ResponseEntity<Integer>(houseService.getWish(map), HttpStatus.OK);
 	}
 	
-//	@GetMapping("/wish/{user}")
-//	private ResponseEntity<Integer> getAllwish(@PathVariable("user") String user) {
-//		HashMap<String, String> map = new HashMap<String, String>();
-//		map.put("userId", user);
-//		return new ResponseEntity<Integer>(houseService.getAllWish(map), HttpStatus.OK);
-//	}
+	@GetMapping("/wish/{pageNo}/{dong}/{word}/{userid}")
+	private ResponseEntity<Map<String, Object>> getAllwish(@PathVariable Map<String,String> map) {
+		PageBean bean = new PageBean();
+		bean.setStartNo(Integer.parseInt(map.get("pageNo")));
+		bean.setDong(map.get("dong"));
+		bean.setWord(map.get("word"));
+		map.put("perPage", String.valueOf(bean.getInterval()));
+		
+		Map<String, Object> res = new HashMap<String, Object>();
+		List<HouseDealDto> wishes = houseService.getAllWish(map);
+		res.put("bean", map);
+		res.put("wishes", wishes);
+		
+		System.out.println(res.toString());
+		
+		return new ResponseEntity<Map<String, Object>>(res, HttpStatus.OK);
+	}
 	
 	@DeleteMapping("/wish/{user}/{dealno}")
 	private ResponseEntity<String> deletewish(@PathVariable("user") String user,@PathVariable("dealno") String no) {

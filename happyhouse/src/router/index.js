@@ -5,18 +5,19 @@ import Login from '@/components/user/login';
 import Register from '@/components/user/register';
 import Userinfo from '@/components/user/userInfo';
 import List from '@/components/house/List';
+import Wishhouse from '@/components/house/Wishhouse';
 import Adminuser from '@/components/user/adminuser';
 import Qna from '@/components/qna/Qna';
 import QnaList from '@/components/qna/List';
 import QnaCreate from '@/components/qna/Create';
 import QnaDetail from '@/components/qna/Search';
 import QnaUpdate from '@/components/qna/Update';
-import QnaReply from '@/components/qna/Reply';
 import Notice from '@/components/notice/Notice';
 import NoticeList from '@/components/notice/List';
 import NoticeCreate from '@/components/notice/Create';
 import NoticeDetail from '@/components/notice/Search';
 import NoticeUpdate from '@/components/notice/Update';
+import NotFound from '@/views/NotFoundPage.vue';
 
 Vue.use(VueRouter);
 
@@ -25,6 +26,11 @@ const routes = [
     path: '/',
     name: 'List',
     component: List,
+  },
+  {
+    path: '/wish',
+    name: 'Wishhouse',
+    component: Wishhouse,
   },
 
   // {
@@ -100,13 +106,6 @@ const routes = [
         path: 'detail',
         name: 'qnadetail',
         component: QnaDetail,
-        children: [
-          {
-            path: 'reply',
-            name: 'qnareply',
-            component: QnaReply,
-          },
-        ],
       },
       {
         path: 'update',
@@ -115,6 +114,7 @@ const routes = [
       },
     ],
   },
+  { path: '*', component: NotFound },
 ];
 
 const router = new VueRouter({
