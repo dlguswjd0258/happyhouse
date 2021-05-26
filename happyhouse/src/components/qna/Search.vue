@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <h2 class="text-center">QNA_{{ board.no }}</h2>
     <b-table-simple v-if="board">
       <tr>
         <th>번호</th>
@@ -33,7 +32,7 @@
       </button>
     </div>
     <div>
-      <router-view :board="this.board" :userId="this.userId" />
+      <qna-reply :board="this.board" :userId="this.userId" />
     </div>
     <div class="text-right"></div>
   </div>
@@ -42,8 +41,12 @@
 import axios from 'axios';
 import moment from 'moment';
 import { bus } from '@/eventbus';
+import QnaReply from '@/components/qna/Reply';
 
 export default {
+  components: {
+    QnaReply,
+  },
   data() {
     return { board: {} };
   },
@@ -55,7 +58,7 @@ export default {
   },
   created() {
     bus.$on('searchBoard', this.searchBoard);
-    this.$router.push('/qna/detail/reply');
+    this.$router.push('/qna/detail');
   },
   methods: {
     updateBoard() {

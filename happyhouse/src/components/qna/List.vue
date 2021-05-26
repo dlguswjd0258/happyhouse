@@ -4,7 +4,7 @@
       <button class="btn btn-primary" @click="movePage">질문 등록</button>
     </div>
     <div v-if="qnas.length > 0">
-      <b-table-simple hover small borderless>
+      <b-table-simple class="table-responsive table">
         <colgroup>
           <col width="5%" />
           <col width="45%" />
@@ -34,9 +34,9 @@
       <div class="overflow-auto">
         <b-pagination
           align="center"
-          v-model="bean.pageNo"
-          :total-rows="bean.total"
-          :per-page="bean.interval"
+          v-model="pageNo"
+          :total-rows="total"
+          :per-page="interval"
           aria-controls="my-table"
         ></b-pagination>
       </div>
@@ -51,7 +51,12 @@ import { bus } from '@/eventbus';
 
 export default {
   data() {
-    return { qnas: [], bean: {} };
+    return {
+      qnas: [],
+      pageNo: 1,
+      total: 0,
+      interval: 0,
+    };
   },
   filters: {
     toDate(regtime) {
@@ -68,17 +73,24 @@ export default {
     movePage() {
       this.$router.push('/qna/create');
     },
+    getList() {
+      axios
+        .get(`http://localhost:8090/qna/${this.pageNo}/all/${null}`)
+        .then(({ data }) => {
+          this.qnas = data.boards;
+          this.total = data.bean.total;
+          this.interval = data.bean.interval;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   created() {
-    axios
-      .get(`http://localhost:8090/qna/1/all/${null}`)
-      .then(({ data }) => {
-        this.qnas = data.boards;
-        this.bean = data.bean;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.getList();
+  },
+  watch: {
+    pageNo: 'getList',
   },
 };
 </script>

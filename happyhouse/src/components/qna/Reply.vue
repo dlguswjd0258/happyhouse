@@ -134,10 +134,6 @@ export default {
           });
       }
     },
-    setBoard(data) {
-      this.no = data.no;
-      this.reply = data.reply;
-    },
   },
 };
 </script>
