@@ -64,7 +64,6 @@ export default {
 			// 	position: new kakao.maps.LatLng(37.57, 127.01)
 			// 	});
 			// marker1.setMap(map);
-
 			var imageSrc = 'https://img-premium.flaticon.com/png/512/4550/4550968.png?token=exp=1621925513~hmac=0ac36993aa79aec61cd425bf9eb4d49c', // 마커이미지의 주소입니다    
 			imageSize = new kakao.maps.Size(35, 34.5), // 마커이미지의 크기입니다
 			imageOption = {offset: new kakao.maps.Point(17, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
