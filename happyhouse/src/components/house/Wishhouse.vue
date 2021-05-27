@@ -165,6 +165,12 @@ export default {
   computed: {
     ...mapGetters(['user']),
   },
+  created() {
+    if (!this.user) {
+      alert('로그인 해주세요.');
+      this.$router.push('/login');
+    }
+  },
 };
 </script>
 

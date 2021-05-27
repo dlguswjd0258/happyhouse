@@ -102,10 +102,8 @@ export default {
     logout() {
       this.$store.dispatch('resetUser');
       console.log(this.user.userId);
+      this.$router.push('/');
     },
-  },
-  created() {
-    this.logout();
   },
 };
 </script>

@@ -70,6 +70,7 @@
 
 <script>
 import axios from 'axios';
+import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
@@ -77,6 +78,15 @@ export default {
       bean: {},
       pageNo: 1,
     };
+  },
+  computed: {
+    ...mapGetters(['user']),
+  },
+  created() {
+    if (!this.user) {
+      alert('로그인 해주세요.');
+      this.$router.push('/login');
+    }
   },
   methods: {
     getList() {
@@ -111,9 +121,6 @@ export default {
           .catch(() => alert('회원 조회 중 오류가 발생했습니다.'));
       }
     },
-  },
-  created() {
-    this.getList();
   },
 };
 </script>

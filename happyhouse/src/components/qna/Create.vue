@@ -42,13 +42,22 @@
 </template>
 <script>
 import axios from 'axios';
-
+import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
       title: '',
       content: '',
     };
+  },
+  computed: {
+    ...mapGetters(['user']),
+  },
+  created() {
+    if (!this.user) {
+      alert('로그인 해주세요.');
+      this.$router.push('/login');
+    }
   },
   methods: {
     moveHandler() {

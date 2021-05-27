@@ -37,13 +37,6 @@ const routes = [
     name: 'Wishhouse',
     component: Wishhouse,
   },
-
-  // {
-  //   path: '/',
-  //   name: 'Home',
-  //   component: Home,
-  // },
-
   {
     path: '/login',
     name: 'login',
@@ -123,7 +116,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  // mode: 'history',
+  mode: 'history',
   base: process.env.BASE_URL,
   routes,
 });
