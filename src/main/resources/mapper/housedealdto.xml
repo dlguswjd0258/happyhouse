@@ -110,19 +110,19 @@
 		<if test="dong!='' and dong!='null'">
 				<choose>
 					<when test="word!='null' and word!=''">
-						, AptName like concat('%',#{word},'%')
+						and AptName like concat('%',#{word},'%')
 						and dong = #{dong}
 					</when>
 					<when test="word=='null' or word==''">
-						, dong = #{dong}
+						and dong = #{dong}
 					</when>
 				</choose>
 			</if>
 			<if test="dong=='' or dong=='null'">
 				<if test="word!='null' and word!=''">
-					, AptName like concat('%',#{word},'%')
+					and AptName like concat('%',#{word},'%')
 				</if>
-			</if>;
+			</if>
 	</select>
 	<select id="totalWishCount" parameterType="map"
 		resultType="int">
@@ -131,17 +131,17 @@
 		<if test="dong!='' and dong!='null'">
 				<choose>
 					<when test="word!='null' and word!=''">
-						, AptName like concat('%',#{word},'%')
+						and AptName like concat('%',#{word},'%')
 						and dong = #{dong}
 					</when>
 					<when test="word=='null' or word==''">
-						, dong = #{dong}
+						and dong = #{dong}
 					</when>
 				</choose>
 			</if>
 			<if test="dong=='' or dong=='null'">
 				<if test="word!='null' and word!=''">
-					, AptName like concat('%',#{word},'%')
+					and AptName like concat('%',#{word},'%')
 				</if>
 			</if>;
 	</select>
