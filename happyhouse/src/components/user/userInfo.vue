@@ -20,7 +20,7 @@
                   >아이디
                 </label>
                 <div class="col-md-8">
-                  <label for="inputName" class="col-md-3 control-label text-md-right col-form-label"
+                  <label for="inputName" class="control-label text-md-right col-form-label"
                     >{{ user.userId }}
                   </label>
                 </div>
@@ -74,7 +74,7 @@
                   <label
                     v-if="!modify"
                     for="inputName"
-                    class="col-md-3 control-label text-md-right col-form-label"
+                    class="control-label text-md-right col-form-label"
                     >{{ user.userName }}
                   </label>
                   <input
@@ -95,7 +95,7 @@
                   <label
                     v-if="!modify"
                     for="inputName"
-                    class="col-md-3 control-label text-md-right col-form-label"
+                    class="control-label text-md-right col-form-label"
                     >{{ user.address }}
                   </label>
                   <input
@@ -118,7 +118,7 @@
                   <label
                     v-if="!modify"
                     for="inputName"
-                    class="col-md-3 control-label text-md-right col-form-label"
+                    class="control-label text-md-right col-form-label"
                     >{{ user.email }}
                   </label>
                   <input
