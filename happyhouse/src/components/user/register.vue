@@ -90,22 +90,35 @@
 
               <div class="form-group" align="left">
                 <label for="addressCommon">주소</label><br />
-                <input
-                  type="text"
-                  class="form-control mb-3"
-                  id="addressCommon"
-                  ref="addressCommon"
-                  placeholder="도로명 주소"
-                  v-model="adderssCommon"
-                />
-                <input
-                  type="text"
-                  class="form-control"
-                  id="addressDetail"
-                  ref="addressDetail"
-                  placeholder="상세 주소"
-                  v-model="addressDetail"
-                />
+                <div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">{{ postcode || '우편번호' }}</span>
+                    </div>
+                    <input
+                      v-model="address"
+                      type="text"
+                      class="form-control"
+                      placeholder="주소"
+                      readonly
+                    />
+                    <div class="input-group-append">
+                      <button @click="openModal()" class="form-control" type="button">
+                        주소검색
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <input
+                      v-model="addressDetail"
+                      type="text"
+                      class="form-control"
+                      placeholder="상세주소"
+                    />
+                  </div>
+                </div>
+                <post-modal @close="closeModal" v-if="showModal"> </post-modal>
               </div>
               <div class="form-group" align="center">
                 <button type="button" class="btn btn-primary" id="registerBtn" @click="regist()">
@@ -122,7 +135,12 @@
 
 <script>
 import axios from 'axios';
+import { bus } from '@/eventbus';
+import PostModal from '@/components/user/PostModal';
 export default {
+  components: {
+    PostModal,
+  },
   data() {
     return {
       userName: '',
@@ -131,7 +149,8 @@ export default {
       pwdcheck: '',
       emailId: '',
       emailDomain: 'naver.com',
-      adderssCommon: '',
+      postcode: '',
+      address: '',
       addressDetail: '',
       okId: false,
       okPwd: false,
@@ -139,10 +158,19 @@ export default {
       msgPwd: '',
       statusIdMsg: '',
       statusPwdMsg: '',
+      showModal: false,
     };
   },
-
+  created() {
+    bus.$on('getAddress', this.setAddress);
+  },
   methods: {
+    openModal() {
+      this.showModal = true;
+    },
+    closeModal() {
+      this.showModal = false;
+    },
     regist() {
       let err = true;
       let msg = '';
@@ -185,7 +213,7 @@ export default {
             userId: this.userId,
             userPwd: this.userPwd,
             email: this.emailId + '@' + this.emailDomain,
-            address: this.adderssCommon + ' ' + this.addressDetail,
+            address: this.address + ' ' + this.addressDetail,
           })
           .then(() => {
             alert('회원가입 성공');
@@ -221,6 +249,11 @@ export default {
         this.statusPwdMsg = 'waringMsg';
         this.okPwd = false;
       }
+    },
+    setAddress(data) {
+      console.log(data);
+      this.postcode = data.zonecode;
+      this.address = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
     },
   },
 };
