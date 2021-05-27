@@ -4,7 +4,7 @@
       <div class="modal-wrapper">
         <div class="modal-container">
           <h1 slot="header" class="modal-title">{{ deal.aptName }}</h1>
-
+          
           <div class="modal-body">
             <p>이미지</p>
             <b-table-simple small>
@@ -112,7 +112,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .modal-mask {
   position: fixed;
   z-index: 9998;
