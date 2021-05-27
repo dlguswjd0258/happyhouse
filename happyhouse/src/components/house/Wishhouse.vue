@@ -71,14 +71,14 @@
         <el-table-column label="층수" min-width="90px" prop="floor"> </el-table-column>
         <el-table-column label="건축연도" min-width="90px" prop="buildYear"> </el-table-column>
       </el-table>
-      <div class="m-auto">
+      <div class="overflow-auto mt-3">
         <b-pagination
+          align="center"
           v-model="pageNo"
           :total-rows="total"
-          :per-page="perPage"
+          :per-page="interval"
           aria-controls="my-table"
-        >
-        </b-pagination>
+        ></b-pagination>
       </div>
     </div>
 
@@ -98,26 +98,7 @@ export default {
   },
   data() {
     return {
-      wishes: [
-        {
-          aptName: '경희궁의아침4단지',
-          area: '150.48',
-          buildYear: '2004',
-          code: '11110',
-          dealAmount: '160,000',
-          dealDate: null,
-          dealDay: '25',
-          dealMonth: '1',
-          dealYear: '2019',
-          dong: '내수동',
-          floor: '14',
-          jibun: '73',
-          lat: null,
-          lng: null,
-          no: 5,
-          wish: false,
-        },
-      ],
+      wishes: [],
       city: null,
       gus: [],
       gu: [],
@@ -130,7 +111,7 @@ export default {
     };
   },
   created() {
-    // this.searchWish();
+    this.searchWish();
   },
   methods: {
     searchWish() {
@@ -141,14 +122,12 @@ export default {
           `http://localhost:8090/house/wish/${this.pageNo}/${this.dong}/${this.word}/${this.user.userId}`
         )
         .then(({ data }) => {
-          console.log(data.wishes);
           this.wishes = data.wishes;
-          console.log(this.wishes[0].aptName);
           this.total = data.bean.total;
           this.perPage = data.bean.perPage;
-          // bus.$emit('showDeals', data);
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err);
           alert('거래 정보 조회 중 오류 발생!');
         });
     },
