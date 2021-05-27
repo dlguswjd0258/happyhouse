@@ -47,7 +47,9 @@
           <b-td class="text-center" v-text="user.address"></b-td>
           <b-td class="text-center" v-text="user.joindate"></b-td>
           <b-td class="text-center"
-            ><button type="button" class="btn btn-primary">삭제</button></b-td
+            ><button type="button" class="btn btn-primary" @click="deleteUser(user.userId)">
+              삭제
+            </button></b-td
           >
         </b-tr>
       </b-tbody>
@@ -87,6 +89,7 @@ export default {
       alert('로그인 해주세요.');
       this.$router.push('/login');
     }
+    this.getList();
   },
   methods: {
     getList() {
@@ -119,6 +122,19 @@ export default {
             this.bean.word = '';
           })
           .catch(() => alert('회원 조회 중 오류가 발생했습니다.'));
+      }
+    },
+    deleteUser(userid) {
+      if (confirm('정말 삭제하시겠습니까?')) {
+        axios
+          .delete('http://localhost:8090/user/' + userid)
+          .then(() => {
+            alert('삭제 되었습니다.');
+            this.getList();
+          })
+          .catch(() => {
+            alert('삭제 중 오류가 발생했습니다. 다시 시도해 주세요.');
+          });
       }
     },
   },

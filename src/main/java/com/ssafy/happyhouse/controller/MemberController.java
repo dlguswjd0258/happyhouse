@@ -40,19 +40,19 @@ public class MemberController {
 	@PostMapping("/login")
 	private ResponseEntity<String> login(@RequestBody MemberDto memberDto, HttpSession session) {
 		String msg = "success";
-		
+
 		MemberDto dto = memberService.getMember(memberDto.getUserId());
 		// 아이디 없음
-		if(dto == null) {
+		if (dto == null) {
 			msg = "등록된 아이디가 없습니다.";
-		}else if(passwordEncoder.matches(memberDto.getUserPwd(), dto.getUserPwd())) { // 로그인 성공
+		} else if (passwordEncoder.matches(memberDto.getUserPwd(), dto.getUserPwd())) { // 로그인 성공
 			dto.setUserPwd("");
 			session.setAttribute("userinfo", dto);
 			System.out.println(session.getAttribute("userinfo"));
-		}else { // 
+		} else { //
 			msg = "비밀번호가 일치하지 않습니다.";
 		}
-		
+
 		return new ResponseEntity<String>(msg, HttpStatus.OK);
 	}
 
@@ -80,28 +80,28 @@ public class MemberController {
 		memberService.registerMember(memberDto);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
-	
+
 	// 회원 정보 조회 => 로그인 시 세션에 담아놨기 때문에 세션값 주기
 	@GetMapping
 	private ResponseEntity<MemberDto> memberInfo(HttpSession session) {
 		System.out.println(session.getAttribute("userinfo"));
-		return new ResponseEntity<MemberDto>((MemberDto)session.getAttribute("userinfo"),HttpStatus.OK);
+		return new ResponseEntity<MemberDto>((MemberDto) session.getAttribute("userinfo"), HttpStatus.OK);
 	}
-	
+
 	// 회원 정보 수정
 	@PutMapping
 	private ResponseEntity<String> memberModify(@RequestBody MemberDto memberDto) {
 		String pwd = memberDto.getUserPwd().trim();
 		System.out.println("pwd: " + pwd);
-		if(pwd != null && !"".equals(pwd)) {
+		if (pwd != null && !"".equals(pwd)) {
 			memberDto.setUserPwd(passwordEncoder.encode(pwd));
-		}else {
+		} else {
 			memberDto.setUserPwd(null);
 		}
 		memberService.modifyMember(memberDto);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
-	
+
 	// 회원 탈퇴
 	@DeleteMapping
 	private ResponseEntity<String> memberDelete(HttpSession session) {
@@ -110,27 +110,35 @@ public class MemberController {
 			memberService.deleteMember(memberDto.getUserId());
 			session.invalidate();
 			return new ResponseEntity<String>(HttpStatus.OK);
-		}else {
+		} else {
 			System.out.println(memberDto);
 			return new ResponseEntity<String>("로그인 해주세요.", HttpStatus.NO_CONTENT);
 		}
 	}
 
+	// 회원 삭제
+	@DeleteMapping("/{userId}")
+	private ResponseEntity<String> memberDelete(@PathVariable("userId") String userId) {
+		memberService.deleteMember(userId);
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
 	@GetMapping("/{pageNo}/{key}/{word}")
 	@ResponseBody
-	private ResponseEntity<Map<String,Object>> searchAll(@PathVariable("pageNo") int pageNo, @PathVariable("key") String key, @PathVariable("word") String word){
+	private ResponseEntity<Map<String, Object>> searchAll(@PathVariable("pageNo") int pageNo,
+			@PathVariable("key") String key, @PathVariable("word") String word) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+
 		PageBean bean = new PageBean();
 		bean.setKey(key);
 		bean.setWord(word);
 		bean.setPageNo(pageNo);
 		map.put("bean", bean);
-		
+
 		List<MemberDto> users = memberService.searchAll(bean);
 		map.put("users", users);
-		
-		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
-	
+
 }

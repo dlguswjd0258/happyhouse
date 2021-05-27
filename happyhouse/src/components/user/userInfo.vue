@@ -205,24 +205,22 @@ export default {
       if (!err) {
         alert(msg);
       } else {
-        if (confirm('pwd : ' + this.user.userPwd)) {
-          axios
-            .put('http://localhost:8090/user/', {
-              userName: this.user.userName,
-              userId: this.user.userId,
-              userPwd: this.user.userPwd,
-              email: this.user.email,
-              address: this.user.address,
-            })
-            .then(() => {
-              alert('수정 성공');
-              // this.$router.push('/userInfo');
-              this.modify = !this.modify;
-              this.user.userPwd = '';
-              this.pwdcheck = '';
-            })
-            .catch(() => alert('수정 중 오류가 발생했습니다. 다시 시도해 주세요.'));
-        }
+        axios
+          .put('http://localhost:8090/user/', {
+            userName: this.user.userName,
+            userId: this.user.userId,
+            userPwd: this.user.userPwd,
+            email: this.user.email,
+            address: this.user.address,
+          })
+          .then(() => {
+            alert('수정 성공');
+            // this.$router.push('/userInfo');
+            this.modify = !this.modify;
+            this.user.userPwd = '';
+            this.pwdcheck = '';
+          })
+          .catch(() => alert('수정 중 오류가 발생했습니다. 다시 시도해 주세요.'));
       }
     },
     checkPwd() {
@@ -247,6 +245,7 @@ export default {
               this.$router.push('/login'); // 메인으로 이동
             } else {
               alert('탈퇴 되었습니다.');
+              this.$store.dispatch('resetUser');
               this.$router.push('/'); // 메인으로 이동
             }
           })
